@@ -1,0 +1,28 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--alabaster-grey);
+}
+
+.backdrop {
+    width: 700px;
+    background-color: var(--dark-teal);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding: 50px 0px;
+}
+
+#login-title {
+    margin: 0;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
