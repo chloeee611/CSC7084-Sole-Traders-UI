@@ -15,15 +15,20 @@
         </div>
         <div id="sidebar">
             <ul>
-                <li id="present">Trader Directory</li>
-                <li><a href="trader-login">Trader Login</a></li>
-                <li><a href="contact-us">Contact Us</a></li>
+                <li><a href="/trader-directory">Trader Directory</a></li>
+                <li><a href="/trader-login">Trader Login</a></li>
+                <li><a href="/contact-us">Contact Us</a></li>
             </ul>
         </div>
         <div id="mainContent">
             <h1>Welcome to trader profile!</h1>
-            <%= trader.name %> - <%= trader.trade_type %> - <%= trader.region %>
-                
+            <ul>
+                <% if (isloggedin) { %>
+                 You are logged in
+                <% } else { %>
+                 You are trespassing
+                 <% } %>
+            </ul>
         </div>
     </div>
 </body>
