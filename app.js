@@ -8,6 +8,7 @@ const baseRouter = require("./routes/base-routes");
 const traderDirectoryRouter = require("./routes/trader-directory-routes");
 const traderProfileRouter = require("./routes/trader-profile-routes");
 const loginRouter = require("./routes/login-routes");
+const registerRouter = require("./routes/register-routes");
 
 const PORT = process.env.PORT;
 
@@ -28,6 +29,7 @@ app.use("/", baseRouter);
 app.use("/trader-directory", traderDirectoryRouter);
 app.use("/trader-profile", traderProfileRouter);
 app.use("/trader-login", loginRouter);
+app.use("/trader-register", registerRouter);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "html"));

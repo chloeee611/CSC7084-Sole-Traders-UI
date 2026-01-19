@@ -12,6 +12,15 @@
     <div id="container">
         <div id="header">
             <h1 id="text">Sole Traders</h1>
+            <!-- <ul>
+                <% if (isloggedin) { %>
+                 <div></div>
+                    <ul>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+                <% } %>
+            </ul> -->
         </div>
         <div id="sidebar">
             <ul>
@@ -25,9 +34,14 @@
             <ul>
                 <% if (isloggedin) { %>
                  You are logged in
+                 <div>
+                    <ul>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
                 <% } else { %>
                  You are trespassing
-                 <% } %>
+                <% } %>
             </ul>
         </div>
     </div>
