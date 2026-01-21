@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
-const loginControllers = require("../controllers/login-controllers");
+const loginController = require("../controllers/login-controller");
+const baseController = require("../controllers/base-controller");
 
-router.get("/", (req, res) => {
-    res.render("home");
-});
-
-router.get("/logout", loginControllers.getLogout);
+router.get("/", baseController.getHome);
+router.get("/logout", loginController.getLogout);
 
 module.exports = router;

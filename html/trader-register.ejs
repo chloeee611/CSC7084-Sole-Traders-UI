@@ -9,26 +9,28 @@
     </head>
 
     <body>
-        <form action="/trader-register" method="post">
+        <a id="home" href="/">Back to Home</a>
+        <form class="backdrop" action="/trader-register" method="post">
+            <h3 id="title">Register</h3>
             <div>
                 <label>Name</label>
-                <input input type="text" name="name" />
+                <input type="text" name="name" />
             </div>
             <div>
                 <label>Username</label>
-                <input input type="text" name="username" />
+                <input type="text" name="username" />
             </div>
             <div>
                 <label>Email</label>
-                <input input type="email" name="email" />
+                <input type="email" name="email" />
             </div>
             <div>
                 <label>Password</label>
-                <input input type="password" name="password" />
+                <input type="password" name="password" />
             </div>
             <div>
                 <label>Confirm Password</label>
-                <input input type="password" name="confirmPassword" />
+                <input type="password" name="confirmPassword" />
             </div>
             <div class="buttons">
                 <button class="button" type="submit">Register</button>

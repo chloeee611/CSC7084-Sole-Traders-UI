@@ -2,7 +2,7 @@ const conn = require("../utils/dbconn");
 const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 10;
 
-exports.registerPage = (req, res) => {
+exports.getRegisterPage = (req, res) => {
     res.render("trader-register");
 };
 

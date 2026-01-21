@@ -1,9 +1,8 @@
 const express = require("express");
-const controllers = require("../controllers/register-controllers");
-
+const controller = require("../controllers/register-controller");
 const router = express.Router({ mergeParams: true });
 
-router.get("/", controllers.registerPage);
-router.post("/", controllers.postRegister);
+router.get("/", controller.getRegisterPage);
+router.post("/", controller.postRegister);
 
 module.exports = router;

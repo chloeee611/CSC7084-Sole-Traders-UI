@@ -1,9 +1,8 @@
 const express = require("express");
-const controllers = require("../controllers/login-controllers");
-
+const controller = require("../controllers/login-controller");
 const router = express.Router({ mergeParams: true });
 
-router.get("/", controllers.loginPage);
-router.post("/", controllers.postLogin);
+router.get("/", controller.getLoginPage);
+router.post("/", controller.postLogin);
 
 module.exports = router;

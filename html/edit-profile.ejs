@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Trader Details</title>
+        <link href="/css/styles.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1 id="text">Sole Traders</h1>
+            </div>
+            <div id="sidebar">
+                <ul>
+                    <li id="present">Trader Directory</li>
+                    <li><a href="/trader-login">Trader Login</a></li>
+                    <li><a href="/contact-us">Contact Us</a></li>
+                </ul>
+            </div>
+            <div id="mainContent">
+                <h1>Edit your profile</h1>
+                <form class="backdrop" action="/trader-profile/edit/<%= trader.trader_id %>" method="post">
+                    <div>
+                        <label>Trade Type</label>
+                        <select type="text" name="trade_type">
+                            <option></option>
+                            <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
+                                <option 
+                                    value="<%= trade_type_id %>" 
+                                    <% if (trader.trade_type === trade_type_id) { %>
+                                    selected
+                                    <% } %>
+                                >
+                                    <%=trade_type_name%>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Region</label>
+                        <input
+                            type="text"
+                            name="region"
+                            value="<%= trader.region %>"
+                        />
+                    </div>
+                    <div>
+                        <label>Availability</label>
+                        <input
+                            type="text"
+                            name="availability"
+                            value="<%= trader.availability %>"
+                        />
+                    </div>
+                    <div>
+                        <label>Bio</label>
+                        <textarea name="bio"><%= trader.bio %></textarea>
+                    </div>
+                    <div class="buttons">
+                        <button class="button" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

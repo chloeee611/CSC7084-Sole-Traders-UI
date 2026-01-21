@@ -30,7 +30,7 @@
             </ul>
         </div>
         <div id="mainContent">
-            <h1>Welcome to trader profile!</h1>
+            <h1>Welcome to your profile!</h1>
             <ul>
                 <% if (isloggedin) { %>
                  You are logged in
@@ -41,6 +41,15 @@
                 </div>
                 <% } else { %>
                  You are trespassing
+                <% } %>
+            </ul>
+            <ul>
+                <% if (isloggedin) { %>
+                 <div>
+                    <ul>
+                        <li><a href="/trader-profile/edit/<%= trader.trader_id %>">Edit Details</a></li>
+                    </ul>
+                </div>
                 <% } %>
             </ul>
         </div>

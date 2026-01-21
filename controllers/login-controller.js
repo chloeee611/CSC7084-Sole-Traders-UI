@@ -1,7 +1,7 @@
 const conn = require("../utils/dbconn");
 const bcrypt = require("bcrypt");
 
-exports.loginPage = (req, res) => {
+exports.getLoginPage = (req, res) => {
     res.render("trader-login");
 };
 

@@ -9,6 +9,7 @@ body {
 .backdrop {
     width: 700px;
     background-color: var(--dark-teal);
+    color: var(--alabaster-grey);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -17,12 +18,23 @@ body {
     padding: 50px 0px;
 }
 
-#login-title {
+#title {
     margin: 0;
 }
+
+/* #home {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+} */
 
 .inputs {
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+
+.button {
+    border-radius: 10px;
+    padding: 10px;
 }
