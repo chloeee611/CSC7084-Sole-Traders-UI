@@ -22,11 +22,11 @@ body {
     margin: 0;
 }
 
-/* #home {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-} */
+#home-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
 
 .inputs {
     display: flex;

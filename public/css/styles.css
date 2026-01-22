@@ -87,3 +87,34 @@ body {
     border-bottom: 1px #D0EEF9 solid;
     text-decoration: none;
 }
+
+.icon-button {
+    background: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    width: 82px;
+    height: 82px;
+    padding: 15px;
+    color: var(--alabaster-grey);
+    background-color: var(--deep-teal);
+    border: 1px solid var(--alabaster-grey);
+    border-radius: 10px;
+}
+
+.primary-button {
+    padding: 15px 25px;
+    font-weight: 700;
+    color: var(--alabaster-grey);
+    background-color: var(--deep-teal);
+    border: 1px solid var(--alabaster-grey);
+    border-radius: 10px;
+}
+
+.secondary-button {
+    padding: 15px 25px;
+    color: var(--iron-grey);
+    background-color: var(--lavender);
+    border: 1px solid var(--alabaster-grey);
+    border-radius: 10px;
+}

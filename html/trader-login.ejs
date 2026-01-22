@@ -9,7 +9,16 @@
     </head>
 
     <body>
-        <a href="/">Back to Home</a>
+        <a href="/" id="home-button">
+            <button class="icon-button">
+                <img
+                    src="/icons/home.svg"
+                    alt="Back to Home"
+                    height="50"
+                    width="50"
+                />
+            </button>
+        </a>
         <form class="backdrop" action="/trader-login" method="post">
             <h3 id="title">Login</h3>
             <div class="inputs">
@@ -17,10 +26,10 @@
                 <input name="password" type="password" placeholder="Password" />
             </div>
             <div class="buttons">
-                <button class="button">
+                <button class="primary-button">
                     <a href="/trader-register"> Register </a>
                 </button>
-                <button class="button" type="submit">Login</button>
+                <button class="primary-button" type="submit">Login</button>
             </div>
         </form>
     </body>
