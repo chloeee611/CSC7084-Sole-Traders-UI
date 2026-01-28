@@ -1,14 +1,21 @@
 const conn = require("../utils/dbconn");
 
-exports.getTraderProfile = (req, res) => {
+exports.getTraderProfilePage = (req, res) => {
     const { isloggedin, traderId } = req.session;
-    const selectTraderSQL = "SELECT * FROM traders WHERE trader_id = ?";
+    const selectTraderSQL = `
+        SELECT * 
+        FROM traders 
+        INNER JOIN trade_types
+        ON traders.trade_type_id = trade_types.trade_type_id
+        WHERE traders.trader_id = ?
+    `;
 
     conn.query(selectTraderSQL, [traderId], (err, rows) => {
         if (err) {
             throw err;
         } else {
-            res.render("trader-profile", {
+            console.log(rows[0]);
+            res.render("trader/profile/view-profile", {
                 isloggedin: isloggedin,
                 trader: rows[0],
             });
@@ -16,10 +23,10 @@ exports.getTraderProfile = (req, res) => {
     });
 };
 
-exports.getEditDetails = (req, res) => {
+exports.getEditDetailsPage = (req, res) => {
     const { isloggedin, traderId } = req.session;
     const selectTraderSQL = "SELECT * FROM traders WHERE trader_id = ?";
-    const selectTraderTypeSQL = "SELECT trade_type_id FROM trade_types";
+    const selectTraderTypeSQL = "SELECT * FROM trade_types";
 
     if (!isloggedin) {
         res.redirect("/trader-login");
@@ -39,7 +46,9 @@ exports.getEditDetails = (req, res) => {
                 throw err;
             }
 
-            res.render("edit-profile", {
+            console.log(trade_type_rows);
+
+            res.render("trader/profile/edit-profile", {
                 isloggedin: isloggedin,
                 trader: trader_rows[0],
                 tradeTypes: trade_type_rows,

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Services</title>
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <h1 id="text">Sole Traders</h1>
+        </div>
+
+        <div id="sidebar">
+            <ul>
+                <li><a href="/trader-directory">Trader Directory</a></li>
+                <li><a href="/trader-profile">My Profile</a></li>
+                <li><a href="/edit-profile">Edit Profile</a></li>
+                <li id="present">Manage Services</a></li>
+                <li><a href="/trader-login/logout">Logout</a></li>
+                <li><a href="/contact-us">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div id="mainContent">
+            <h1>Edit Service</h1>
+            <form action="/trader-services/edit/<%= service.service_id %>" method="post">
+                <div>
+                    <label>Title</label>
+                    <input 
+                        name="title" 
+                        type="text"
+                        value="<%= service.title %>"
+                    />
+                </div>
+                
+                <div>
+                    <label>Description</label>
+                    <input 
+                        name="description" 
+                        type="text" 
+                        value="<%= service.description %>"
+                    />
+                </div>
+
+                <div>
+                    <label>Pricing Type</label>
+                    <select 
+                        name="pricingType"
+                        value="<%= service.pricing_type %>"
+                    >
+                        <option 
+                            value="Hourly"
+                             <% if (service.pricing_type === 'Hourly') { %>
+                                    selected
+                            <% } %>
+                        >
+                            Hourly
+                        </option>
+                        <option 
+                            value="Fixed"
+                             <% if (service.pricing_type === 'Fixed') { %>
+                                    selected
+                            <% } %>
+                        >
+                            Fixed
+                        </option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Base Price</label>
+                    <input 
+                        name="basePrice" 
+                        type="number" 
+                        step=".01"
+                        value="<%= service.base_price %>"
+                    />
+                </div>
+
+                <button type="submit">Edit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

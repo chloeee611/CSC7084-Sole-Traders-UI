@@ -14,8 +14,15 @@
             </div>
             <div id="sidebar">
                 <ul>
-                    <li id="present">Trader Directory</li>
-                    <li><a href="/trader-login">Trader Login</a></li>
+                    <li><a href="/trader-directory">Trader Directory</a></li>
+                    <% if (isloggedin) { %>
+                        <li><a href="/trader-profile">My Profile</a></li>
+                        <li id="present">Edit Profile</li>
+                        <li><a href="/trader-services">Manage Services</a></li>
+                        <li><a href="/trader-login/logout">Logout</a></li>
+                    <% } else { %>
+                        <li><a href="/trader-login">Trader Login</a></li>
+                    <% } %>
                     <li><a href="/contact-us">Contact Us</a></li>
                 </ul>
             </div>
@@ -29,7 +36,7 @@
                             <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
                                 <option 
                                     value="<%= trade_type_id %>" 
-                                    <% if (trader.trade_type === trade_type_id) { %>
+                                    <% if (trader.trade_type_id === trade_type_id) { %>
                                     selected
                                     <% } %>
                                 >

@@ -1,25 +1,40 @@
 const conn = require("../utils/dbconn");
 
-exports.getTraderDirectory = (req, res) => {
-    const selectSQL = "SELECT trader_id, name, trade_type, region FROM traders";
+exports.getTraderDirectoryPage = (req, res) => {
+    const selectSQL = `
+        SELECT * 
+        FROM traders 
+        INNER JOIN trade_types
+        ON traders.trade_type_id = trade_types.trade_type_id
+        `;
+    // TODO: add has_profile to trader
+    // WHERE traders.has_profile = true
+
     conn.query(selectSQL, (err, rows) => {
         if (err) {
             throw err;
         } else {
-            res.render("trader-directory", { traders: rows });
+            res.render("client/directory", { traders: rows });
         }
     });
 };
 
-exports.getTraderDetails = (req, res) => {
+exports.getTraderDetailsPage = (req, res) => {
     const { id } = req.params;
 
-    const selectSQL = `SELECT * FROM traders WHERE trader_id = ${id}`;
+    const selectSQL = `        
+        SELECT * 
+        FROM traders 
+        INNER JOIN trade_types
+        ON traders.trade_type_id = trade_types.trade_type_id 
+        WHERE trader_id = ${id}
+        `;
+
     conn.query(selectSQL, (err, rows) => {
         if (err) {
             throw err;
         } else {
-            res.render("trader-details", { trader: rows[0] });
+            res.render("client/trader-details", { trader: rows[0] });
         }
     });
 };

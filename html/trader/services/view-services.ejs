@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Services</title>
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/login.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <h1 id="text">Sole Traders</h1>
+        </div>
+
+        <div id="sidebar">
+            <ul>
+                <li><a href="/trader-directory">Trader Directory</a></li>
+                <li><a href="/trader-profile">My Profile</a></li>
+                <li><a href="/trader-profile/edit/<%= trader.trader_id %>">Edit Profile</a></li>
+                <li id="present">Manage Services</a></li>
+                <li><a href="/trader-login/logout">Logout</a></li>
+                <li><a href="/contact-us">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div id="mainContent">
+            <h1>My Services</h1>
+            <a href="/trader-services/new-service">Add New Service</a>
+
+            <ul>
+                <% services.forEach(s => { %>
+                    <li>
+                        <strong><%= s.title %></strong> — <%= s.pricing_type %> — £<%= s.base_price %><br/>
+                        <%= s.description %><br/>
+
+                        <a href="/trader-services/edit/<%= s.service_id %>">Edit</a>
+
+                        <form method="post" action="/trader-services/delete/<%= s.service_id %>" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
+                        </form>
+                    </li>
+                <% }) %>
+            </ul>
+
+        </div>
+    </div>
+</body>
+
+</html>

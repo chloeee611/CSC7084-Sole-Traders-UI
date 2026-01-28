@@ -25,7 +25,7 @@
             <ul>
                 <% traders.forEach(trader => { %>
                 <li>
-                    <a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a> - <%= trader.trade_type %> -
+                    <a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a> - <%= trader.trade_type_name %> -
                     <%= trader.region %>
                 </li>
                 <% }) %>
