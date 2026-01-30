@@ -1,45 +1,30 @@
-const conn = require("../utils/dbconn");
-const bcrypt = require("bcrypt");
+const axios = require("axios");
 
 exports.getLoginPage = (req, res) => {
     res.render("client/login");
 };
 
 exports.postLogin = (req, res) => {
-    const { username, password } = req.body;
-    const vals = [username];
-    const checkuserSQL = `SELECT * FROM traders WHERE username = ?`;
+    const payload = ({ username, password } = req.body);
 
-    conn.query(checkuserSQL, vals, (err, rows) => {
-        if (err) throw err;
-
-        const numrows = rows.length;
-
-        if (numrows === 0) {
-            return res.redirect("/trader-login");
-        }
-
-        const trader = rows[0];
-
-        console.log(trader);
-
-        bcrypt.compare(password, trader.password, (err2, match) => {
-            if (err2) {
-                console.error(err2);
-                return res.redirect("/trader-login");
+    axios
+        .post("trader-login", payload)
+        .then((apiRes) => {
+            if (apiRes.status === 200) {
+                req.session.isloggedin = true;
+                req.session.traderId = apiRes.data.traderId;
+                res.redirect("/trader-profile");
+            } else {
+                return res.render("client/login", {
+                    error: apiRes.message,
+                });
             }
-
-            // Password incorrect
-            if (!match) {
-                return res.redirect("/trader-login");
-            }
-
-            // Password correct
-            req.session.isloggedin = true;
-            req.session.traderId = trader.trader_id;
-            res.redirect("/trader-profile");
+        })
+        .catch((err) => {
+            return res.render("client/login", {
+                error: err.response.data.message,
+            });
         });
-    });
 };
 
 exports.getLogout = (req, res) => {

@@ -4,9 +4,9 @@ const controller = require("../controllers/trader-service-controller");
 
 router.get("/", controller.getAllServicesPage);
 router.get("/new-service", controller.getNewServicePage);
-router.get("/edit/:service_id", controller.getEditServicePage);
-router.post("/edit/:service_id", controller.postEditService);
-router.post("/delete/:service_id", controller.postDeleteService);
+router.get("/edit/:serviceId", controller.getEditServicePage);
+router.post("/edit/:serviceId", controller.postEditService);
+router.post("/delete/:serviceId", controller.postDeleteService);
 router.post("/new-service", controller.postNewService);
 
 module.exports = router;

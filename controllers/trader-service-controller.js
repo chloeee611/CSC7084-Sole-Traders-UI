@@ -1,23 +1,24 @@
-const conn = require("../utils/dbconn");
+const axios = require("axios");
 
 exports.getAllServicesPage = (req, res) => {
     const { isloggedin, traderId } = req.session;
-    const selectSQL = `SELECT service_id, title, description, pricing_type, base_price FROM services WHERE trader_id = ?`;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
-    conn.query(selectSQL, [traderId], (err, rows) => {
-        if (err) {
-            throw err;
-        }
-
-        res.render("trader/services/view-services", {
-            services: rows,
-            trader: { trader_id: traderId },
+    axios
+        .get(`/traders/${traderId}/services`)
+        .then((apiRes) => {
+            const services = apiRes.data.result;
+            res.render("trader/services/view-services", {
+                services,
+                trader: { trader_id: traderId },
+            });
+        })
+        .catch((err) => {
+            console.log(`Error making API request: ${err}`);
         });
-    });
 };
 
 exports.getNewServicePage = (req, res) => {
@@ -25,92 +26,81 @@ exports.getNewServicePage = (req, res) => {
 };
 
 exports.getEditServicePage = (req, res) => {
-    const { service_id } = req.params;
+    const { serviceId } = req.params;
     const { isloggedin, traderId } = req.session;
-
-    const selectSQL = `SELECT service_id, title, description, pricing_type, base_price FROM services WHERE trader_id = ? AND service_id = ?`;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
-    conn.query(selectSQL, [traderId, service_id], (err, rows) => {
-        if (err) {
-            throw err;
-        }
-
-        res.render("trader/services/edit-service", {
-            service: rows[0],
-            trader: { trader_id: traderId },
+    axios
+        .get(`/traders/${traderId}/services/${serviceId}`)
+        .then((apiRes) => {
+            const service = apiRes.data.result;
+            res.render("trader/services/edit-service", {
+                service,
+                trader: { trader_id: traderId },
+            });
+        })
+        .catch((err) => {
+            console.log(`Error making API request: ${err}`);
         });
-    });
 };
 
 exports.postNewService = (req, res) => {
-    const { title, description, pricingType, basePrice } = req.body;
+    const payload = ({ title, description, pricingType, basePrice } = req.body);
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
-    const insertSQL = `INSERT INTO services (title, description, pricing_type, base_price, trader_id)
-            VALUES (?, ?, ?, ?, ?)`;
-
-    conn.query(
-        insertSQL,
-        [title, description, pricingType, basePrice, traderId],
-        (err, rows) => {
-            if (err) {
-                throw err;
-            } else {
-                res.redirect(`/trader-services`);
-            }
-        },
-    );
+    axios
+        .post(`traders/${traderId}/services`, payload)
+        .then((apiRes) => {
+            const data = apiRes.data;
+            res.redirect("/trader-services");
+        })
+        .catch((error) => {
+            console.log(`Error making API request: ${error}`);
+        });
 };
 
 exports.postEditService = (req, res) => {
-    const { title, description, pricingType, basePrice } = req.body;
-    const { service_id } = req.params;
+    const payload = ({ title, description, pricingType, basePrice } = req.body);
+    const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
-    const updateSQL = `
-    UPDATE services SET title = ?, description = ?, pricing_type = ?, base_price = ? WHERE trader_id = ? AND service_id = ?`;
-
-    conn.query(
-        updateSQL,
-        [title, description, pricingType, basePrice, traderId, service_id],
-        (err, rows) => {
-            if (err) {
-                throw err;
-            } else {
-                res.redirect(`/trader-services`);
-            }
-        },
-    );
+    axios
+        .put(`traders/${traderId}/services/${serviceId}`, payload)
+        .then((apiRes) => {
+            console.log(apiRes.data);
+            res.redirect("/trader-services");
+        })
+        .catch((error) => {
+            console.log(`Error making API request: ${error}`);
+        });
 };
 
 exports.postDeleteService = (req, res) => {
-    const { service_id } = req.params;
+    const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
-    const deleteSQL = `
-    DELETE FROM services WHERE trader_id = ? AND service_id = ?`;
-
-    conn.query(deleteSQL, [traderId, service_id], (err, rows) => {
-        if (err) {
-            throw err;
-        } else {
-            res.redirect(`/trader-services`);
-        }
-    });
+    axios
+        .delete(`traders/${traderId}/services/${serviceId}`)
+        .then((apiRes) => {
+            console.log(apiRes.data);
+            res.redirect("/trader-services");
+        })
+        .catch((error) => {
+            console.log(`Error making API request: ${error}`);
+        });
 };

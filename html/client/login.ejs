@@ -32,6 +32,9 @@
                 </button>
                 <button class="primary-button" type="submit">Login</button>
             </div>
+            <% if (locals.error && error) { %>
+                <p><%= error %></p>
+            <% } %>
         </form>
     </body>
 </html>

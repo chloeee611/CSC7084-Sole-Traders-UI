@@ -1,6 +1,4 @@
-const conn = require("../utils/dbconn");
-const bcrypt = require("bcrypt");
-const SALT_WORK_FACTOR = 10;
+const axios = require("axios");
 
 exports.getRegisterPage = (req, res) => {
     res.render("client/register");
@@ -15,20 +13,22 @@ exports.postRegister = (req, res) => {
         });
     }
 
-    bcrypt.hash(password, SALT_WORK_FACTOR, (err, hashedPassword) => {
-        const insertSQL = `INSERT INTO traders (name, username, email, password, trade_type, region, availability, bio)
-            VALUES (?, ?, ?, ?, NULL, NULL, NULL, NULL)`;
+    const payload = { name, username, email, password, confirmPassword };
 
-        conn.query(
-            insertSQL,
-            [name, username, email.toLowerCase(), hashedPassword],
-            (err, rows) => {
-                if (err) {
-                    throw err;
-                } else {
-                    res.redirect("/trader-login?registered=1");
-                }
-            },
-        );
-    });
+    axios
+        .post("trader-register", payload)
+        .then((apiRes) => {
+            if (apiRes.status === 201) {
+                res.redirect("/trader-login?registered=1");
+            } else {
+                return res.render("client/register", {
+                    error: apiRes.message,
+                });
+            }
+        })
+        .catch((err) => {
+            return res.render("client/register", {
+                error: err.response.data.message,
+            });
+        });
 };

@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const session = require("express-session");
+const Axios = require("axios");
 require("dotenv").config({ path: "./config.env" });
 const path = require("path");
 
@@ -12,6 +13,7 @@ const registerRouter = require("./routes/register-routes");
 const serviceRouter = require("./routes/trader-service-routes");
 
 const PORT = process.env.PORT;
+Axios.defaults.baseURL = process.env.API_BASE_URL;
 
 var app = express();
 

@@ -11,13 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^6.0.0",
+    "axios": "^1.13.4",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.2.1",
     "express-session": "1.18.2",
     "morgan": "^1.10.1",
-    "mysql2": "^3.16.0",
     "nodemon": "^3.1.11"
   }
 }

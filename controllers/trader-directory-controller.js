@@ -1,40 +1,27 @@
-const conn = require("../utils/dbconn");
+const axios = require("axios");
 
-exports.getTraderDirectoryPage = (req, res) => {
-    const selectSQL = `
-        SELECT * 
-        FROM traders 
-        INNER JOIN trade_types
-        ON traders.trade_type_id = trade_types.trade_type_id
-        `;
-    // TODO: add has_profile to trader
-    // WHERE traders.has_profile = true
-
-    conn.query(selectSQL, (err, rows) => {
-        if (err) {
-            throw err;
-        } else {
-            res.render("client/directory", { traders: rows });
-        }
-    });
+exports.getTraderDirectoryPage = async (req, res) => {
+    axios
+        .get("/traders")
+        .then((apiRes) => {
+            const traders = apiRes.data.result;
+            res.render("client/directory", { traders });
+        })
+        .catch((err) => {
+            console.log(`Error making API request: ${err}`);
+        });
 };
 
 exports.getTraderDetailsPage = (req, res) => {
-    const { id } = req.params;
+    const { traderId } = req.params;
 
-    const selectSQL = `        
-        SELECT * 
-        FROM traders 
-        INNER JOIN trade_types
-        ON traders.trade_type_id = trade_types.trade_type_id 
-        WHERE trader_id = ${id}
-        `;
-
-    conn.query(selectSQL, (err, rows) => {
-        if (err) {
-            throw err;
-        } else {
-            res.render("client/trader-details", { trader: rows[0] });
-        }
-    });
+    axios
+        .get(`/traders/${traderId}`)
+        .then((apiRes) => {
+            const trader = apiRes.data.result;
+            res.render("client/trader-details", { trader });
+        })
+        .catch((err) => {
+            console.log(`Error making API request: ${err}`);
+        });
 };
