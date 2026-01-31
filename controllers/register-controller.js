@@ -13,7 +13,7 @@ exports.postRegister = (req, res) => {
         });
     }
 
-    const payload = { name, username, email, password, confirmPassword };
+    const payload = { name, username, email, password };
 
     axios
         .post("trader-register", payload)

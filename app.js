@@ -11,6 +11,7 @@ const traderProfileRouter = require("./routes/trader-profile-routes");
 const loginRouter = require("./routes/login-routes");
 const registerRouter = require("./routes/register-routes");
 const serviceRouter = require("./routes/trader-service-routes");
+const bookingRouter = require("./routes/booking-routes");
 
 const PORT = process.env.PORT;
 Axios.defaults.baseURL = process.env.API_BASE_URL;
@@ -34,6 +35,7 @@ app.use("/trader-profile", traderProfileRouter);
 app.use("/trader-login", loginRouter);
 app.use("/trader-register", registerRouter);
 app.use("/trader-services", serviceRouter);
+app.use("/booking", bookingRouter);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "html"));

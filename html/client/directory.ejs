@@ -21,6 +21,9 @@
             </ul>
         </div>
         <div id="mainContent">
+            <% if(locals.bookingMade && bookingMade) { %>
+                <p>Thank you for your booking</p>
+            <% } %>
             <h1>Welcome to trader directory!</h1>
             <ul>
                 <% traders.forEach(trader => { %>

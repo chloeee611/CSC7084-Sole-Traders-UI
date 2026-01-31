@@ -5,7 +5,10 @@ exports.getTraderDirectoryPage = async (req, res) => {
         .get("/traders")
         .then((apiRes) => {
             const traders = apiRes.data.result;
-            res.render("client/directory", { traders });
+            res.render("client/directory", {
+                traders,
+                bookingMade: req.query.bookingMade,
+            });
         })
         .catch((err) => {
             console.log(`Error making API request: ${err}`);
@@ -19,7 +22,22 @@ exports.getTraderDetailsPage = (req, res) => {
         .get(`/traders/${traderId}`)
         .then((apiRes) => {
             const trader = apiRes.data.result;
-            res.render("client/trader-details", { trader });
+
+            axios
+                .get(`/traders/${traderId}/services`)
+                .then((servicesApiRes) => {
+                    const services = servicesApiRes.data.result;
+
+                    res.render("client/trader-details", {
+                        trader: {
+                            ...trader,
+                            services,
+                        },
+                    });
+                })
+                .catch((err) => {
+                    console.log(`Error making API request: ${err}`);
+                });
         })
         .catch((err) => {
             console.log(`Error making API request: ${err}`);
