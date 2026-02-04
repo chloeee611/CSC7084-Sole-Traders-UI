@@ -21,6 +21,7 @@
                 <li><a href="/trader-profile">My Profile</a></li>
                 <li><a href="/trader-profile/edit/<%= trader.trader_id %>">Edit Profile</a></li>
                 <li id="present">Manage Services</a></li>
+                <li><a href="/bookings">Manage Bookings</a></li>
                 <li><a href="/trader-login/logout">Logout</a></li>
                 <li><a href="/contact-us">Contact Us</a></li>
             </ul>
@@ -31,14 +32,14 @@
             <a href="/trader-services/new-service">Add New Service</a>
 
             <ul>
-                <% services.forEach(s => { %>
+                <% services.forEach(service => { %>
                     <li>
-                        <strong><%= s.title %></strong> — <%= s.pricing_type %> — £<%= s.base_price %><br/>
-                        <%= s.description %><br/>
+                        <strong><%= service.title %></strong> — <%= service.pricing_type %> — £<%= service.base_price %><br/>
+                        <%= service.description %><br/>
 
-                        <a href="/trader-services/edit/<%= s.service_id %>">Edit</a>
+                        <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
 
-                        <form method="post" action="/trader-services/delete/<%= s.service_id %>" style="display:inline;">
+                        <form method="post" action="/trader-services/delete/<%= service.service_id %>" style="display:inline;">
                             <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
                         </form>
                     </li>

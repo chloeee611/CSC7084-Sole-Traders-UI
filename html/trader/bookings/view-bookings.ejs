@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Services</title>
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/login.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <h1 id="text">Sole Traders</h1>
+        </div>
+
+        <div id="sidebar">
+            <ul>
+                <li><a href="/trader-directory">Trader Directory</a></li>
+                <li><a href="/trader-profile">My Profile</a></li>
+                <li><a href="/trader-profile/edit/<%= trader.trader_id %>">Edit Profile</a></li>
+                <li><a href="/trader-services">Manage Services</a></li>
+                <li id="present">Manage Bookings</a></li>
+                <li><a href="/trader-login/logout">Logout</a></li>
+                <li><a href="/contact-us">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div id="mainContent">
+            <h1>My Bookings</h1>
+
+            <ul>
+                <% bookings.forEach(booking => { %>
+                    <li>
+                        <strong><%= booking.client_name %></strong> — <%= booking.client_email_address %> — <%= booking.requested_date_time %><br/>
+                        <%= booking.job_description %> — <%= booking.status %><br/>
+
+                        <% if (booking.status === "pending") { %>
+                            <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status" style="display:inline;">
+                                <input type="hidden" name="status" value="confirmed">
+                                <button type="submit">Accept</button>
+                            </form>
+
+                            <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status" style="display:inline;">
+                                <input type="hidden" name="status" value="rejected">
+                                <button type="submit">Reject</button>
+                            </form>
+                        <% } %>
+                    </li>
+                <% }) %>
+            </ul>
+
+        </div>
+    </div>
+</body>
+
+</html>

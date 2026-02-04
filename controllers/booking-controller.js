@@ -1,52 +1,6 @@
 const axios = require("axios");
 
-// TODO: remove pages, update put and post endpoints
-exports.getAllServicesPage = (req, res) => {
-    const { isloggedin, traderId } = req.session;
-
-    if (!isloggedin) {
-        res.redirect("/trader-login");
-    }
-
-    axios
-        .get(`/traders/${traderId}/services`)
-        .then((apiRes) => {
-            const services = apiRes.data.result;
-            res.render("trader/services/view-services", {
-                services,
-                trader: { trader_id: traderId },
-            });
-        })
-        .catch((err) => {
-            console.log(`Error making API request: ${err}`);
-        });
-};
-
-exports.getNewServicePage = (req, res) => {
-    res.render("trader/services/new-service", {});
-};
-
-exports.getEditServicePage = (req, res) => {
-    const { serviceId } = req.params;
-    const { isloggedin, traderId } = req.session;
-
-    if (!isloggedin) {
-        res.redirect("/trader-login");
-    }
-
-    axios
-        .get(`/traders/${traderId}/services/${serviceId}`)
-        .then((apiRes) => {
-            const service = apiRes.data.result;
-            res.render("trader/services/edit-service", {
-                service,
-                trader: { trader_id: traderId },
-            });
-        })
-        .catch((err) => {
-            console.log(`Error making API request: ${err}`);
-        });
-};
+//#region Client
 
 exports.postNewBooking = (req, res) => {
     const payload = ({
@@ -72,41 +26,53 @@ exports.postNewBooking = (req, res) => {
         });
 };
 
-exports.postEditService = (req, res) => {
-    const payload = ({ title, description, pricingType, basePrice } = req.body);
-    const { serviceId } = req.params;
-    const { traderId, isloggedin } = req.session;
+//#endregion
+
+//#region Trader
+exports.getAllBookingsPage = (req, res) => {
+    const { isloggedin, traderId } = req.session;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
     axios
-        .put(`traders/${traderId}/services/${serviceId}`, payload)
+        .get(`/bookings`)
         .then((apiRes) => {
-            console.log(apiRes.data);
-            res.redirect("/trader-services");
+            const bookings = apiRes.data.result;
+            res.render("trader/bookings/view-bookings", {
+                bookings,
+                trader: { trader_id: traderId },
+            });
         })
-        .catch((error) => {
-            console.log(`Error making API request: ${error}`);
+        .catch((err) => {
+            console.log(`Error making API request: ${err}`);
         });
 };
 
-exports.postDeleteService = (req, res) => {
-    const { serviceId } = req.params;
+exports.patchBookingStatus = (req, res) => {
+    const { bookingId } = req.params;
     const { traderId, isloggedin } = req.session;
+    const { status } = req.body;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
+    const allowed = ["confirmed", "rejected"];
+    if (!allowed.includes(status)) {
+        return res.redirect("/trader-bookings?error=badStatus");
+    }
+
     axios
-        .delete(`traders/${traderId}/services/${serviceId}`)
+        .patch(`/bookings/${bookingId}/status`, { status, traderId })
         .then((apiRes) => {
             console.log(apiRes.data);
-            res.redirect("/trader-services");
+            res.redirect("/trader-bookings");
         })
         .catch((error) => {
-            console.log(`Error making API request: ${error}`);
+            console.log(`Error updating bookingt: ${error}`);
         });
 };
+
+//#endregion

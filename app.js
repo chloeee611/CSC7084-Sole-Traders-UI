@@ -35,7 +35,7 @@ app.use("/trader-profile", traderProfileRouter);
 app.use("/trader-login", loginRouter);
 app.use("/trader-register", registerRouter);
 app.use("/trader-services", serviceRouter);
-app.use("/booking", bookingRouter);
+app.use("/trader-bookings", bookingRouter);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "html"));
