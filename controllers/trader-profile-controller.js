@@ -57,7 +57,7 @@ exports.getEditDetailsPage = (req, res) => {
 };
 
 exports.postDetails = (req, res) => {
-    const payload = ({ trade_type, region, availability, bio } = req.body);
+    const payload = req.body;
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {

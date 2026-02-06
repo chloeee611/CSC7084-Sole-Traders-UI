@@ -71,8 +71,8 @@ body {
     display: block;
     padding: 3px 3px 5px 25px;
     background-color: #104547;
-    color: #FFFFFF;
-    border-bottom: 1px #D0EEF9 solid;
+    color: #ffffff;
+    border-bottom: 1px #d0eef9 solid;
     text-decoration: none;
 }
 
@@ -83,9 +83,9 @@ body {
 #sidebar #present {
     display: block;
     padding: 3px 3px 5px 25px;
-    background-color: #5E807F;
+    background-color: #5e807f;
     color: #000000;
-    border-bottom: 1px #D0EEF9 solid;
+    border-bottom: 1px #d0eef9 solid;
     text-decoration: none;
 }
 
@@ -118,4 +118,35 @@ body {
     background-color: var(--lavender);
     border: 1px solid var(--alabaster-grey);
     border-radius: 10px;
+}
+
+table {
+    padding: 30px 0px;
+}
+
+th,
+td {
+    border: 1px solid black;
+}
+
+tr:nth-child(even) {
+    background-color: var(--mint-cream);
+}
+
+tr {
+    border-bottom: 1px solid var(--iron-grey);
+}
+
+.form {
+    width: 400px;
+    padding: 8px 0px 20px 26px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#fieldLabel {
+    padding: 0px 10px 0px 0px;
 }

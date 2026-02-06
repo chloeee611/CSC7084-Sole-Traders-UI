@@ -22,14 +22,17 @@
 
         <form class="backdrop" action="/trader-login" method="post">
             <h3 id="title">Login</h3>
-            <div class="inputs">
-                <input name="username" placeholder="Username" />
-                <input name="password" type="password" placeholder="Password" />
+            <div class="form-input-group">
+                <label>Username</label>
+                <input name="username" />
+                <label>Password</label>
+                <input name="password" type="password" />
             </div>
             <div class="buttons">
-                <button class="primary-button">
-                    <a href="/trader-register"> Register </a>
-                </button>
+                <!-- TODO: Fix ugly button -->
+                <a href="/trader-register" class="primary-button">
+                    Register 
+                </a>
                 <button class="primary-button" type="submit">Login</button>
             </div>
             <% if (locals.error && error) { %>

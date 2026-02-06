@@ -48,7 +48,7 @@ exports.getEditServicePage = (req, res) => {
 };
 
 exports.postNewService = (req, res) => {
-    const payload = ({ title, description, pricingType, basePrice } = req.body);
+    const payload = req.body;
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {
@@ -59,6 +59,7 @@ exports.postNewService = (req, res) => {
         .post(`traders/${traderId}/services`, payload)
         .then((apiRes) => {
             const data = apiRes.data;
+            console.log(data);
             res.redirect("/trader-services");
         })
         .catch((error) => {
@@ -67,7 +68,7 @@ exports.postNewService = (req, res) => {
 };
 
 exports.postEditService = (req, res) => {
-    const payload = ({ title, description, pricingType, basePrice } = req.body);
+    const payload = req.body;
     const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
 

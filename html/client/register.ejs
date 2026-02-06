@@ -22,33 +22,55 @@
 
         <form class="backdrop" action="/trader-register" method="post">
             <h3 id="title">Register</h3>
-            <div class="form-input-group">
-                <label>Name</label>
-                <input type="text" name="name" />
+            <div>
+                <div class="form-input-group">
+                    <label>Name</label>
+                    <input type="text" name="name" />
+                </div>
+                <% if (locals.errorResults && errorResults.name) { %>
+                    <p  class="form-error-message"><%= errorResults.name %></p>
+                <% } %>
             </div>
-            <div class="form-input-group">
-                <label>Username</label>
-                <input type="text" name="username" />
+            <div>
+                <div class="form-input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" />
+                </div>
+                <% if (locals.errorResults && errorResults.username) { %>
+                    <p  class="form-error-message"><%= errorResults.username %></p>
+                <% } %>
             </div>
-            <div class="form-input-group">
-                <label>Email</label>
-                <input type="email" name="email" />
+            <div>
+                <div class="form-input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" />
+                </div>
+                <% if (locals.errorResults && errorResults.email) { %>
+                    <p  class="form-error-message"><%= errorResults.email %></p>
+                <% } %>
             </div>
-            <div class="form-input-group">
-                <label>Password</label>
-                <input type="password" name="password" />
+            <div>
+                <div class="form-input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" />
+                </div>
+                <% if (locals.errorResults && errorResults.password) { %>
+                    <p class="form-error-message"><%= errorResults.password %></p>
+                <% } %>
             </div>
-            <div class="form-input-group">
-                <label>Confirm Password</label>
-                <input type="password" name="confirmPassword" />
+            <div>
+                <div class="form-input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" />
+                </div>
+                <% if (locals.errorResults && errorResults.confirmPassword) { %>
+                    <p  class="form-error-message"><%= errorResults.confirmPassword %></p>
+                <% } %>
             </div>
             <div class="buttons">
                 <button class="button" type="submit">Register</button>
             </div>
-            
-            <% if (locals.error && error) { %>
-                <p><%= error %></p>
-            <% } %>
+        
         </form>
 
     </body>

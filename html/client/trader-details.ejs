@@ -24,48 +24,46 @@
                 <%= trader.name %> - <%= trader.trade_type_name %> - <%=
                 trader.region %>
 
-                <form action="/booking/new" method="post">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Pricing Type</th>
-                                <th>Base Price</th>
-                                <th>Select Service</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% trader.services?.forEach(service => { %>
+                <div>
+                    <form action="/trader-bookings/new" method="post">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><%= service.title %></td>
-                                    <td><%= service.description %></td>
-                                    <td><%= service.pricing_type %></td>
-                                    <td><%= service.base_price %></td>
-                                    <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Pricing Type</th>
+                                    <th>Base Price</th>
+                                    <th>Select Service</th>
                                 </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <% trader.services?.forEach(service => { %>
+                                    <tr>
+                                        <td><%= service.title %></td>
+                                        <td><%= service.description %></td>
+                                        <td><%= service.pricing_type %></td>
+                                        <td><%= service.base_price %></td>
+                                        <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
 
-                    <div>
-                        <label>Your Name:</label>
-                        <input name="clientName" type="text" />
-                    </div>
-                    <div>
-                        <label>Email Address:</label>
-                        <input name="clientEmailAddress" type="email" />
-                    </div>
-                    <div>
-                        <label>Date and Time:</label>
-                        <input name="requestedDateTime" type="datetime-local" />
-                    </div>
-                    <div>
-                        <label>Job Description:</label>
-                        <textarea name="jobDescription" type="text"></textarea>
-                    </div>
-                    <button type="submit">Request Booking</button>
-                </form>
+                        <div class="form">
+                            <label id="fieldLabel">Your Name:</label>
+                            <input name="clientName" type="text" />
+                            <label>Email Address:</label>
+                            <input name="clientEmailAddress" type="email" />
+                            <label>Date and Time:</label>
+                            <input name="requestedDateTime" type="datetime-local" />
+                            <label>Job Description:</label>
+                            <textarea name="jobDescription" type="text"></textarea>
+                        </div>
+
+                        <button type="submit" class="primary-button">Request Booking</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </body>

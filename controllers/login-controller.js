@@ -5,7 +5,9 @@ exports.getLoginPage = (req, res) => {
 };
 
 exports.postLogin = (req, res) => {
-    const payload = ({ username, password } = req.body);
+    const payload = req.body;
+
+    // TODO: Make validation client based
 
     axios
         .post("trader-login", payload)

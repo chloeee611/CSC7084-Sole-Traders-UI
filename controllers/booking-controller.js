@@ -3,16 +3,7 @@ const axios = require("axios");
 //#region Client
 
 exports.postNewBooking = (req, res) => {
-    const payload = ({
-        clientName,
-        clientEmailAddress,
-        serviceId,
-        requestedDate,
-        requestedStartTime,
-        jobDescription,
-    } = req.body);
-
-    console.log(req.body);
+    const payload = req.body;
 
     axios
         .post(`bookings`, { ...payload, status: "pending" })

@@ -23,6 +23,11 @@ body {
     grid-template-columns: 1fr 1fr;
 }
 
+.form-error-message {
+    color: red;
+    font-size: 10px;
+}
+
 #title {
     margin: 0;
 }
