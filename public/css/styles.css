@@ -110,6 +110,8 @@ body {
     background-color: var(--deep-teal);
     border: 1px solid var(--alabaster-grey);
     border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .secondary-button {

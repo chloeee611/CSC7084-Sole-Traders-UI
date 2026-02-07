@@ -12,8 +12,10 @@ exports.postNewBooking = (req, res) => {
                 res.redirect("/trader-directory?bookingMade=true");
             }
         })
-        .catch((error) => {
-            console.log(`Error making API request: ${error}`);
+        .catch((err) => {
+            return res.render("client/trader-details", {
+                errorResults: err.response.data.validationResults,
+            });
         });
 };
 

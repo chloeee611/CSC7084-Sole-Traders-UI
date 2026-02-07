@@ -25,7 +25,7 @@
                 trader.region %>
 
                 <div>
-                    <form action="/trader-bookings/new" method="post">
+                    <form action="/trader-bookings/bookings/<%= trader.trader_id %>" method="post">
                         <table>
                             <thead>
                                 <tr>
@@ -52,6 +52,9 @@
                         <div class="form">
                             <label id="fieldLabel">Your Name:</label>
                             <input name="clientName" type="text" />
+                            <% if (locals.errorResults && errorResults.clientName) { %>
+                                <p  class="form-error-message"><%= errorResults.clientName %></p>
+                            <% } %>
                             <label>Email Address:</label>
                             <input name="clientEmailAddress" type="email" />
                             <label>Date and Time:</label>
