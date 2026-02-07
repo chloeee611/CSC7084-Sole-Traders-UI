@@ -13,9 +13,34 @@ exports.postNewBooking = (req, res) => {
             }
         })
         .catch((err) => {
-            return res.render("client/trader-details", {
-                errorResults: err.response.data.validationResults,
-            });
+            const { traderId } = req.params;
+
+            axios
+                .get(`/traders/${traderId}`)
+                .then((apiRes) => {
+                    const trader = apiRes.data.result;
+
+                    axios
+                        .get(`/traders/${traderId}/services`)
+                        .then((servicesApiRes) => {
+                            const services = servicesApiRes.data.result;
+
+                            res.render("client/trader-details", {
+                                trader: {
+                                    ...trader,
+                                    services,
+                                },
+                                errorResults:
+                                    err.response.data.validationResults,
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(`Error making API request: ${err}`);
+                        });
+                })
+                .catch((err) => {
+                    console.log(`Error making API request: ${err}`);
+                });
         });
 };
 

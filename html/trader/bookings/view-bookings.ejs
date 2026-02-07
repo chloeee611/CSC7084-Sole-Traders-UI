@@ -30,26 +30,39 @@
         <div id="mainContent">
             <h1>My Bookings</h1>
 
-            <ul>
-                <% bookings.forEach(booking => { %>
-                    <li>
-                        <strong><%= booking.client_name %></strong> — <%= booking.client_email_address %> — <%= booking.requested_date_time %><br/>
-                        <%= booking.job_description %> — <%= booking.status %><br/>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Client Email Address</th>
+                        <th>Date and Time</th>
+                        <th>Job Description</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bookings.forEach(booking => { %>
+                        <tr>
+                            <td><%= booking.client_name %></td>
+                            <td><%= booking.client_email_address %></td>
+                            <td><%= booking.requested_date_time %></td>
+                            <td><%= booking.job_description %></td>
+                            <td><%= booking.status %></td>
+                            <td><% if (booking.status === "pending") { %>
+                                <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status" style="display:inline;">
+                                    <input type="hidden" name="status" value="confirmed">
+                                    <button type="submit" id="accept-button">Accept</button>
+                                </form>
 
-                        <% if (booking.status === "pending") { %>
-                            <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status" style="display:inline;">
-                                <input type="hidden" name="status" value="confirmed">
-                                <button type="submit">Accept</button>
-                            </form>
-
-                            <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status" style="display:inline;">
-                                <input type="hidden" name="status" value="rejected">
-                                <button type="submit">Reject</button>
-                            </form>
-                        <% } %>
-                    </li>
-                <% }) %>
-            </ul>
+                                <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status" style="display:inline;">
+                                    <input type="hidden" name="status" value="rejected">
+                                    <button type="submit" id="reject-button">Reject</button>
+                                </form>
+                            <% } %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
 
         </div>
     </div>

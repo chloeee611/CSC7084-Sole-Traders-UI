@@ -7,8 +7,6 @@ exports.getTraderProfilePage = (req, res) => {
         res.redirect("/trader-login");
     }
 
-    console.log(traderId);
-
     axios
         .get(`/traders/${traderId}`)
         .then((apiRes) => {
