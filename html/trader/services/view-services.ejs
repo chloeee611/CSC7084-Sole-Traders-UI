@@ -16,6 +16,7 @@
         </div>
 
         <div id="sidebar">
+            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
             <ul>
                 <li><a href="/trader-directory">Trader Directory</a></li>
                 <li><a href="/trader-profile">My Profile</a></li>
@@ -27,25 +28,26 @@
             </ul>
         </div>
 
-        <div id="mainContent">
-            <h1>My Services</h1>
-            <a href="/trader-services/new-service">Add New Service</a>
+        <div id="main-content">
+            <div class="general-content">
+                <h1>My Services</h1>
+                <a href="/trader-services/new-service">Add New Service</a>
 
-            <ul>
-                <% services.forEach(service => { %>
-                    <li>
-                        <strong><%= service.title %></strong> — <%= service.pricing_type %> — £<%= service.base_price %><br/>
-                        <%= service.description %><br/>
+                <ul>
+                    <% services.forEach(service => { %>
+                        <li>
+                            <strong><%= service.title %></strong> — <%= service.pricing_type %> — £<%= service.base_price %><br/>
+                            <%= service.description %><br/>
 
-                        <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
+                            <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
 
-                        <form method="post" action="/trader-services/delete/<%= service.service_id %>" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
-                        </form>
-                    </li>
-                <% }) %>
-            </ul>
-
+                            <form method="post" action="/trader-services/delete/<%= service.service_id %>" style="display:inline;">
+                                <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
+                            </form>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
         </div>
     </div>
 </body>

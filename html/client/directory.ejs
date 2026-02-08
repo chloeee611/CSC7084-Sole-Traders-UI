@@ -11,41 +11,43 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1 id="text">Sole Traders</h1>
+            <h1 id="text">SOLE TRADERS</h1>
         </div>
         <div id="sidebar">
+            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
             <ul>
                 <li id="present">Trader Directory</li>
                 <li><a href="/trader-login">Trader Login</a></li>
                 <li><a href="/contact-us">Contact Us</a></li>
             </ul>
         </div>
-        <div id="mainContent">
-            <% if(locals.bookingMade && bookingMade) { %>
-                <p>Thank you for your booking</p>
-            <% } %>
-            <h1>Welcome to the trader directory!</h1>
-            <p>Click each trader's name to view their profile</p>
+        <div id="main-content">
+            <div class="general-content">
+                <% if(locals.bookingMade && bookingMade) { %>
+                    <p>Thank you for your booking</p>
+                <% } %>
+                <h1>Trader Directory</h1>
+                <p>Click each trader's name to view their profile</p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Trader Name</th>
-                        <th>Trader Type</th>
-                        <th>Region</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% traders.forEach(trader => { %>
+                <table>
+                    <thead>
                         <tr>
-                            <td><a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a></td>
-                            <td><%= trader.trade_type_name %></td>
-                            <td><%= trader.region %></td>
+                            <th>Trader Name</th>
+                            <th>Trader Type</th>
+                            <th>Region</th>
                         </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                        <% traders.forEach(trader => { %>
+                            <tr>
+                                <td><a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a></td>
+                                <td><%= trader.trade_type_name %></td>
+                                <td><%= trader.region %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>

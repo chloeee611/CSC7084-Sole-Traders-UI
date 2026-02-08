@@ -1,4 +1,6 @@
 body {
+    width: 100%;
+    height: 97vh;
     margin: 0px 0px 0px 0px;
     background-color: #dee5e5;
     font-family: Arial, Helvetica, sans-serif;
@@ -24,23 +26,22 @@ body {
 }
 
 #container {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    grid-template-rows: 130px 1fr;
     width: 100%;
     height: 100%;
     background-color: #dee5e5;
-    margin: 0 auto 0 auto;
-    padding: 0 0 0 0;
-    text-align: left;
 }
 
 #header {
-    background-color: #6b9080;
-    margin: 0 5px 0 5px;
-    padding: 0 0 0 0;
-    border-radius: 10px;
-    width: auto;
+    grid-column: 2;
+    grid-row: 1;
     height: 130px;
     font-family: Arial, Helvetica, sans-serif;
-    color: #dee5e5;
+    color: #000000;
+    align-items: center;
+    padding-left: 30px;
 }
 
 #text {
@@ -48,19 +49,29 @@ body {
     font-size: 40px;
 }
 
-#mainContent {
+#main-content {
+    grid-column: 2;
+    grid-row: 2;
     background-color: #dee5e5;
-    margin-left: 170px;
-    padding: 10px 20px 50px 10px;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    width: 90px;
+    height: 90px;
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 35px;
 }
 
 #sidebar {
-    float: left;
+    grid-column: 1;
+    grid-row: 1 / span 2;
     width: 170px;
-    height: 78%;
+    height: 100vh;
     background-color: #6b9080;
-    border-radius: 10px;
-    margin: 20px 30px 0 5px;
     padding: 5px;
     font-weight: bold;
 }
@@ -73,8 +84,8 @@ body {
 
 #sidebar a {
     display: block;
-    padding: 3px 3px 5px 25px;
-    background-color: #6b9080;
+    padding: 30px 3px 5px 25px;
+    background-color: transparent;
     color: #ffffff;
     text-decoration: none;
 }
@@ -85,9 +96,39 @@ body {
 
 #sidebar #present {
     display: block;
-    padding: 3px 3px 5px 25px;
+    padding: 30px 3px 5px 25px;
     color: #000000;
     text-decoration: underline;
+}
+
+.welcome {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
+    width: fit-content;
+}
+
+.welcome h1 {
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.welcome-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.general-content {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: left;
+    margin-top: 20px;
+    width: 100%;
 }
 
 .icon-button {
@@ -102,6 +143,10 @@ body {
     background-color: var(--deep-teal);
     border: 1px solid var(--alabaster-grey);
     border-radius: 10px;
+}
+
+.icon-button:hover {
+    background-color: var(--evergreen);
 }
 
 .primary-button {

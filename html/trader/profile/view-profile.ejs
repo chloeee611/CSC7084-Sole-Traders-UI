@@ -14,6 +14,7 @@
             <h1 id="text">Sole Traders</h1>
         </div>
         <div id="sidebar">
+            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
             <ul>
                 <li><a href="/trader-directory">Trader Directory</a></li>
                 <% if (isloggedin) { %>
@@ -29,19 +30,21 @@
             </ul>
         </div>
         <% if (isloggedin) { %>
-            <div id="mainContent">
-                <h1>Welcome to your profile!</h1>
+            <div id="main-content">
+                <div class="general-content">
+                    <h1>Welcome to your profile!</h1>
 
-                <h2>Your Details</h2>
-                <p><strong>Name:</strong> <%= trader.name %></p>
-                <p><strong>Username:</strong> <%= trader.username %></p>
-                <p><strong>Email:</strong> <%= trader.email %></p>
+                    <h2>Your Details</h2>
+                    <p><strong>Name:</strong> <%= trader.name %></p>
+                    <p><strong>Username:</strong> <%= trader.username %></p>
+                    <p><strong>Email:</strong> <%= trader.email %></p>
 
-                <h2>Your Profile</h2>
-                <p><strong>Trade type:</strong> <%= trader.trade_type_name || "Not set" %></p>
-                <p><strong>Region/Town:</strong> <%= trader.region || "Not set" %></p>
-                <p><strong>Availability:</strong> <%= trader.availability || "Not set" %></p>
-                <p><strong>Bio:</strong> <%= trader.bio || "Not set" %></p>
+                    <h2>Your Profile</h2>
+                    <p><strong>Trade type:</strong> <%= trader.trade_type_name || "Not set" %></p>
+                    <p><strong>Region/Town:</strong> <%= trader.region || "Not set" %></p>
+                    <p><strong>Availability:</strong> <%= trader.availability || "Not set" %></p>
+                    <p><strong>Bio:</strong> <%= trader.bio || "Not set" %></p>
+                </div>
             </div>
         <% } else { %>
             Please login first

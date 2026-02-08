@@ -15,6 +15,7 @@
         </div>
 
         <div id="sidebar">
+            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
             <ul>
                 <li><a href="/trader-directory">Trader Directory</a></li>
                 <li><a href="/trader-profile">My Profile</a></li>
@@ -25,64 +26,66 @@
             </ul>
         </div>
 
-        <div id="mainContent">
-            <h1>Edit Service</h1>
-            <form action="/trader-services/edit/<%= service.service_id %>" method="post">
-                <div>
-                    <label>Title</label>
-                    <input 
-                        name="title" 
-                        type="text"
-                        value="<%= service.title %>"
-                    />
-                </div>
-                
-                <div>
-                    <label>Description</label>
-                    <input 
-                        name="description" 
-                        type="text" 
-                        value="<%= service.description %>"
-                    />
-                </div>
+        <div id="main-content">
+            <div class="general-content">
+                <h1>Edit Service</h1>
+                <form action="/trader-services/edit/<%= service.service_id %>" method="post">
+                    <div>
+                        <label>Title</label>
+                        <input 
+                            name="title" 
+                            type="text"
+                            value="<%= service.title %>"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label>Description</label>
+                        <input 
+                            name="description" 
+                            type="text" 
+                            value="<%= service.description %>"
+                        />
+                    </div>
 
-                <div>
-                    <label>Pricing Type</label>
-                    <select 
-                        name="pricingType"
-                        value="<%= service.pricing_type %>"
-                    >
-                        <option 
-                            value="Hourly"
-                             <% if (service.pricing_type === 'Hourly') { %>
-                                    selected
-                            <% } %>
+                    <div>
+                        <label>Pricing Type</label>
+                        <select 
+                            name="pricingType"
+                            value="<%= service.pricing_type %>"
                         >
-                            Hourly
-                        </option>
-                        <option 
-                            value="Fixed"
-                             <% if (service.pricing_type === 'Fixed') { %>
-                                    selected
-                            <% } %>
-                        >
-                            Fixed
-                        </option>
-                    </select>
-                </div>
+                            <option 
+                                value="Hourly"
+                                <% if (service.pricing_type === 'Hourly') { %>
+                                        selected
+                                <% } %>
+                            >
+                                Hourly
+                            </option>
+                            <option 
+                                value="Fixed"
+                                <% if (service.pricing_type === 'Fixed') { %>
+                                        selected
+                                <% } %>
+                            >
+                                Fixed
+                            </option>
+                        </select>
+                    </div>
 
-                <div>
-                    <label>Base Price</label>
-                    <input 
-                        name="basePrice" 
-                        type="number" 
-                        step=".01"
-                        value="<%= service.base_price %>"
-                    />
-                </div>
+                    <div>
+                        <label>Base Price</label>
+                        <input 
+                            name="basePrice" 
+                            type="number" 
+                            step=".01"
+                            value="<%= service.base_price %>"
+                        />
+                    </div>
 
-                <button type="submit">Edit</button>
-            </form>
+                    <button type="submit">Edit</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>

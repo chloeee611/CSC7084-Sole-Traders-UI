@@ -13,58 +13,61 @@
                 <h1 id="text">Sole Traders</h1>
             </div>
             <div id="sidebar">
+                <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
                 <ul>
                     <li id="present">Trader Directory</li>
                     <li><a href="/trader-login">Trader Login</a></li>
                     <li><a href="/contact-us">Contact Us</a></li>
                 </ul>
             </div>
-            <div id="mainContent">
-                <h1><%= trader.name %>'s Details</h1>
-                <%= trader.name %> - <%= trader.trade_type_name %> - <%=
-                trader.region %>
+            <div id="main-content">
+                <div class="general-content">
+                    <h1><%= trader.name %>'s Details</h1>
+                    <%= trader.name %> - <%= trader.trade_type_name %> - <%=
+                    trader.region %>
 
-                <div>
-                    <form action="/trader-bookings/bookings/<%= trader.trader_id %>" method="post">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Pricing Type</th>
-                                    <th>Base Price</th>
-                                    <th>Select Service</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% trader.services?.forEach(service => { %>
+                    <div>
+                        <form action="/trader-bookings/bookings/<%= trader.trader_id %>" method="post">
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td><%= service.title %></td>
-                                        <td><%= service.description %></td>
-                                        <td><%= service.pricing_type %></td>
-                                        <td><%= service.base_price %></td>
-                                        <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Pricing Type</th>
+                                        <th>Base Price</th>
+                                        <th>Select Service</th>
                                     </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <% trader.services?.forEach(service => { %>
+                                        <tr>
+                                            <td><%= service.title %></td>
+                                            <td><%= service.description %></td>
+                                            <td><%= service.pricing_type %></td>
+                                            <td><%= service.base_price %></td>
+                                            <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
 
-                        <div class="form">
-                            <label id="fieldLabel">Your Name:</label>
-                            <input name="clientName" type="text" />
-                            <% if (locals.errorResults && errorResults.clientName) { %>
-                                <p  class="form-error-message"><%= errorResults.clientName %></p>
-                            <% } %>
-                            <label>Email Address:</label>
-                            <input name="clientEmailAddress" type="email" />
-                            <label>Date and Time:</label>
-                            <input name="requestedDateTime" type="datetime-local" />
-                            <label>Job Description:</label>
-                            <textarea name="jobDescription" type="text"></textarea>
-                        </div>
+                            <div class="form">
+                                <label id="fieldLabel">Your Name:</label>
+                                <input name="clientName" type="text" />
+                                <% if (locals.errorResults && errorResults.clientName) { %>
+                                    <p  class="form-error-message"><%= errorResults.clientName %></p>
+                                <% } %>
+                                <label>Email Address:</label>
+                                <input name="clientEmailAddress" type="email" />
+                                <label>Date and Time:</label>
+                                <input name="requestedDateTime" type="datetime-local" />
+                                <label>Job Description:</label>
+                                <textarea name="jobDescription" type="text"></textarea>
+                            </div>
 
-                        <button type="submit" class="primary-button">Request Booking</button>
-                    </form>
+                            <button type="submit" class="primary-button">Request Booking</button>
+                        </form>
+                    </div>
                 </div>
 
             </div>
