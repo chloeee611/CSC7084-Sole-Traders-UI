@@ -4,17 +4,16 @@ const axios = require("axios");
 
 exports.postNewBooking = (req, res) => {
     const payload = req.body;
+    const { traderId } = req.params;
 
     axios
         .post(`bookings`, { ...payload, status: "pending" })
         .then((apiRes) => {
             if (apiRes.status === 201) {
-                res.redirect("/trader-directory?bookingMade=true");
+                res.redirect(`/trader-directory/${traderId}?bookingMade=true`);
             }
         })
         .catch((err) => {
-            const { traderId } = req.params;
-
             axios
                 .get(`/traders/${traderId}`)
                 .then((apiRes) => {
@@ -25,7 +24,7 @@ exports.postNewBooking = (req, res) => {
                         .then((servicesApiRes) => {
                             const services = servicesApiRes.data.result;
 
-                            res.render("client/trader-details", {
+                            return res.render("client/trader-details", {
                                 trader: {
                                     ...trader,
                                     services,
@@ -33,9 +32,6 @@ exports.postNewBooking = (req, res) => {
                                 errorResults:
                                     err.response.data.validationResults,
                             });
-                        })
-                        .catch((err) => {
-                            console.log(`Error making API request: ${err}`);
                         });
                 })
                 .catch((err) => {

@@ -7,7 +7,6 @@ exports.getTraderDirectoryPage = async (req, res) => {
             const traders = apiRes.data.result;
             res.render("client/directory", {
                 traders,
-                bookingMade: req.query.bookingMade,
             });
         })
         .catch((err) => {
@@ -33,6 +32,7 @@ exports.getTraderDetailsPage = (req, res) => {
                             ...trader,
                             services,
                         },
+                        bookingMade: req.query.bookingMade,
                     });
                 })
                 .catch((err) => {

@@ -22,7 +22,13 @@ exports.getAllServicesPage = (req, res) => {
 };
 
 exports.getNewServicePage = (req, res) => {
-    res.render("trader/services/new-service", {});
+    const { isloggedin } = req.session;
+
+    if (!isloggedin) {
+        res.redirect("/trader-login");
+    }
+
+    res.render("trader/services/new-service");
 };
 
 exports.getEditServicePage = (req, res) => {
@@ -52,18 +58,20 @@ exports.postNewService = (req, res) => {
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {
-        res.redirect("/trader-login");
+        return res.redirect("/trader-login");
     }
 
     axios
-        .post(`traders/${traderId}/services`, payload)
+        .post(`/traders/${traderId}/services`, payload)
         .then((apiRes) => {
             const data = apiRes.data;
             console.log(data);
             res.redirect("/trader-services");
         })
-        .catch((error) => {
-            console.log(`Error making API request: ${error}`);
+        .catch((err) => {
+            res.render("trader/services/new-service", {
+                errorResults: err.response.data.validationResults,
+            });
         });
 };
 

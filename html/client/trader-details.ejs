@@ -5,12 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Trader Details</title>
         <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/login.css" rel="stylesheet" />
     </head>
 
     <body>
         <div id="container">
             <div id="header">
-                <h1 id="text">Sole Traders</h1>
+                <h1 id="text">SOLE TRADERS</h1>
             </div>
             <div id="sidebar">
                 <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
@@ -22,6 +23,9 @@
             </div>
             <div id="main-content">
                 <div class="general-content">
+                    <% if(locals.bookingMade && bookingMade) { %>
+                        <p>Thank you for your booking</p>
+                    <% } %>
                     <h1><%= trader.name %>'s Details</h1>
                     <%= trader.name %> - <%= trader.trade_type_name %> - <%=
                     trader.region %>
@@ -48,21 +52,50 @@
                                             <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
                                         </tr>
                                     <% }) %>
+                                    <!-- TODO: Add service missing error -->
                                 </tbody>
                             </table>
 
                             <div class="form">
-                                <label id="fieldLabel">Your Name:</label>
-                                <input name="clientName" type="text" />
-                                <% if (locals.errorResults && errorResults.clientName) { %>
-                                    <p  class="form-error-message"><%= errorResults.clientName %></p>
-                                <% } %>
-                                <label>Email Address:</label>
-                                <input name="clientEmailAddress" type="email" />
-                                <label>Date and Time:</label>
-                                <input name="requestedDateTime" type="datetime-local" />
-                                <label>Job Description:</label>
-                                <textarea name="jobDescription" type="text"></textarea>
+                                <div>
+                                    <div class="form-input-group">
+                                        <label id="fieldLabel">Your Name:</label>
+                                        <input name="clientName" type="text" />
+                                    </div>
+                                    <% if (locals.errorResults && errorResults.clientName) { %>
+                                        <p  class="form-error-message"><%= errorResults.clientName %></p>
+                                    <% } %>
+                                </div>
+
+                                <div>
+                                    <div class="form-input-group">
+                                        <label>Email Address:</label>
+                                        <input name="clientEmailAddress" type="email" />
+                                    </div>
+                                    <% if (locals.errorResults && errorResults.clientEmailAddress) { %>
+                                        <p  class="form-error-message"><%= errorResults.clientEmailAddress %></p>
+                                    <% } %>
+                                </div>
+
+                                <div>
+                                    <div class="form-input-group">
+                                        <label>Date and Time:</label>
+                                        <input name="requestedDateTime" type="datetime-local" />
+                                    </div>
+                                    <% if (locals.errorResults && errorResults.requestedDateTime) { %>
+                                        <p  class="form-error-message"><%= errorResults.requestedDateTime %></p>
+                                    <% } %>
+                                </div>
+
+                                <div>
+                                    <div class="form-input-group">
+                                        <label>Job Description:</label>
+                                        <textarea name="jobDescription" type="text"></textarea>
+                                    </div>
+                                    <% if (locals.errorResults && errorResults.jobDescription) { %>
+                                        <p  class="form-error-message"><%= errorResults.jobDescription %></p>
+                                    <% } %>
+                                </div>
                             </div>
 
                             <button type="submit" class="primary-button">Request Booking</button>
