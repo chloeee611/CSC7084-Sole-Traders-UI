@@ -30,46 +30,65 @@
             <div id="main-content">
                 <div class="general-content">
                     <h1>Edit your profile</h1>
+
                     <form class="backdrop" action="/trader-profile/edit/<%= trader.trader_id %>" method="post">
-                        <div>
-                            <label>Trade Type</label>
-                            <select type="text" name="trade_type">
-                                <option></option>
-                                <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
-                                    <option 
-                                        value="<%= trade_type_id %>" 
-                                        <% if (trader.trade_type_id === trade_type_id) { %>
-                                        selected
-                                        <% } %>
-                                    >
-                                        <%=trade_type_name%>
-                                    </option>
-                                <% }) %>
-                            </select>
+                        
+                        <div class="form">
+                            <div>
+                                <div class="form-input-group">
+                                    <label>Trade Type</label>
+                                    <select type="text" name="trade_type">
+                                        <option></option>
+                                        <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
+                                            <option 
+                                                value="<%= trade_type_id %>" 
+                                                <% if (trader.trade_type_id === trade_type_id) { %>
+                                                selected
+                                                <% } %>
+                                            >
+                                                <%=trade_type_name%>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <% if (locals.errorResults && errorResults.tradeType) { %>
+                                    <p  class="form-error-message"><%= errorResults.tradeType %></p>
+                                <% } %>
+                            </div>
+
+                            <div>
+                                <div class="form-input-group">
+                                    <label>Region</label>
+                                    <input
+                                        type="text"
+                                        name="region"
+                                        value="<%= trader.region %>"
+                                    />
+                                </div>
+                                <% if (locals.errorResults && errorResults.region) { %>
+                                    <p  class="form-error-message"><%= errorResults.region %></p>
+                                <% } %>
+                            </div>
+
+                            <div>
+                                <label>Availability</label>
+                                <input
+                                    type="text"
+                                    name="availability"
+                                    value="<%= trader.availability %>"
+                                />
+                            </div>
+
+                            <div>
+                                <label>Bio</label>
+                                <textarea name="bio"><%= trader.bio %></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <label>Region</label>
-                            <input
-                                type="text"
-                                name="region"
-                                value="<%= trader.region %>"
-                            />
-                        </div>
-                        <div>
-                            <label>Availability</label>
-                            <input
-                                type="text"
-                                name="availability"
-                                value="<%= trader.availability %>"
-                            />
-                        </div>
-                        <div>
-                            <label>Bio</label>
-                            <textarea name="bio"><%= trader.bio %></textarea>
-                        </div>
+
                         <div class="buttons">
                             <button class="button" type="submit">Update</button>
                         </div>
+
                     </form>
                 </div>
             </div>

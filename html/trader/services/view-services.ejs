@@ -32,20 +32,32 @@
                 <h1>My Services</h1>
                 <a href="/trader-services/new-service">Add New Service</a>
 
-                <ul>
-                    <% services.forEach(service => { %>
-                        <li>
-                            <strong><%= service.title %></strong> — <%= service.pricing_type %> — £<%= service.base_price %><br/>
-                            <%= service.description %><br/>
-
-                            <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
-
-                            <form method="post" action="/trader-services/delete/<%= service.service_id %>" style="display:inline;">
-                                <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
-                            </form>
-                        </li>
-                    <% }) %>
-                </ul>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Pricing Type</th>
+                            <th>Base Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% services.forEach(service => { %>
+                            <tr>
+                                <td><%= service.title %></td>
+                                <td><%= service.description %></td>
+                                <td><%= service.pricing_type %></td>
+                                <td>£<%= service.base_price %></td>
+                                <td><a href="/trader-services/edit/<%= service.service_id %>">Edit</a></td>
+                                <td>
+                                    <form method="post" action="/trader-services/delete/<%= service.service_id %>" style="display:inline;">
+                                        <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

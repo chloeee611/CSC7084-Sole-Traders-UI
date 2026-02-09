@@ -4,7 +4,7 @@ exports.getAllServicesPage = (req, res) => {
     const { isloggedin, traderId } = req.session;
 
     if (!isloggedin) {
-        res.redirect("/trader-login");
+        return res.redirect("/trader-login");
     }
 
     axios
@@ -54,7 +54,7 @@ exports.getEditServicePage = (req, res) => {
 };
 
 exports.postNewService = (req, res) => {
-    const payload = req.body;
+    const payload = { ...req.body, basePrice: Number(req.body.basePrice) };
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {
@@ -76,7 +76,7 @@ exports.postNewService = (req, res) => {
 };
 
 exports.postEditService = (req, res) => {
-    const payload = req.body;
+    const payload = { ...req.body, basePrice: Number(req.body.basePrice) };
     const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
 
