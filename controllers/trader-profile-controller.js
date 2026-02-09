@@ -54,6 +54,7 @@ exports.getEditDetailsPage = (req, res) => {
         });
 };
 
+//TODO: Fix this - isloggedin is not defined
 exports.postDetails = (req, res) => {
     const payload = req.body;
     const { traderId, isloggedin } = req.session;
@@ -68,7 +69,9 @@ exports.postDetails = (req, res) => {
             console.log(apiRes.data);
             res.redirect("/trader-profile");
         })
-        .catch((error) => {
-            console.log(`Error making API request: ${error}`);
+        .catch((err) => {
+            return res.render("trader/profile/edit-profile", {
+                errorResults: err.response.data.validationResults,
+            });
         });
 };
