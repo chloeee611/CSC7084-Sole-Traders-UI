@@ -31,9 +31,11 @@
         <% if (isloggedin) { %>
             <div id="main-content">
                 <div class="general-content">
-                    <h1>Welcome to your profile!</h1>
-
                     <div class="profile-content">
+                        <div class="profile-header">
+                            <h1>Personal Info</h1>
+                            <a href="/trader-profile/edit/<%= trader.trader_id %>">Edit Profile</a>
+                        </div>
                         <div class="profile-item top-item">
                             <img src="/icons/id-badge.svg" class="profile-icon" />
                             <div class="profile-text">
@@ -90,8 +92,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <li><a href="/trader-profile/edit/<%= trader.trader_id %>">Edit Profile</a></li>
                 </div>
             </div>
         <% } else { %>
