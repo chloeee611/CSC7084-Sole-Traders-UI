@@ -54,7 +54,6 @@ exports.getEditDetailsPage = (req, res) => {
         });
 };
 
-//TODO: Fix this - isloggedin is not defined
 exports.postDetails = (req, res) => {
     const payload = req.body;
     const { traderId, isloggedin } = req.session;
@@ -70,8 +69,34 @@ exports.postDetails = (req, res) => {
             res.redirect("/trader-profile");
         })
         .catch((err) => {
-            return res.render("trader/profile/edit-profile", {
-                errorResults: err.response.data.validationResults,
-            });
+            axios
+                .get(`/traders/${traderId}`)
+                .then((traderApiRes) => {
+                    const trader = traderApiRes.data.result;
+
+                    if (!trader) {
+                        res.redirect("/trader-login");
+                    }
+
+                    axios
+                        .get("/trade-types")
+                        .then((tradeTypeApiRes) => {
+                            const tradeTypes = tradeTypeApiRes.data.result;
+
+                            res.render("trader/profile/edit-profile", {
+                                errorResults:
+                                    err.response.data.validationResults,
+                                isloggedin,
+                                trader,
+                                tradeTypes,
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(`Error making API request: ${err}`);
+                        });
+                })
+                .catch((err) => {
+                    console.log(`Error making API request: ${err}`);
+                });
         });
 };

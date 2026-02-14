@@ -43,6 +43,7 @@ exports.getEditServicePage = (req, res) => {
         .get(`/traders/${traderId}/services/${serviceId}`)
         .then((apiRes) => {
             const service = apiRes.data.result;
+
             res.render("trader/services/edit-service", {
                 service,
                 trader: { trader_id: traderId },
@@ -63,14 +64,14 @@ exports.postNewService = (req, res) => {
 
     axios
         .post(`/traders/${traderId}/services`, payload)
-        .then((apiRes) => {
-            const data = apiRes.data;
-            console.log(data);
+        .then(() => {
             res.redirect("/trader-services");
         })
         .catch((err) => {
             res.render("trader/services/new-service", {
                 errorResults: err.response.data.validationResults,
+                isloggedin,
+                trader: { trader_id: traderId },
             });
         });
 };
@@ -85,13 +86,27 @@ exports.postEditService = (req, res) => {
     }
 
     axios
-        .put(`traders/${traderId}/services/${serviceId}`, payload)
+        .put(`/traders/${traderId}/services/${serviceId}`, payload)
         .then((apiRes) => {
             console.log(apiRes.data);
             res.redirect("/trader-services");
         })
-        .catch((error) => {
-            console.log(`Error making API request: ${error}`);
+        .catch((err) => {
+            axios
+                .get(`/traders/${traderId}/services/${serviceId}`)
+                .then((apiRes) => {
+                    const service = apiRes.data.result;
+
+                    res.render("trader/services/edit-service", {
+                        errorResults: err.response.data.validationResults,
+                        isloggedin,
+                        service,
+                        trader: { trader_id: traderId },
+                    });
+                })
+                .catch((err) => {
+                    console.log(`Error making API request: ${err}`);
+                });
         });
 };
 
@@ -104,7 +119,7 @@ exports.postDeleteService = (req, res) => {
     }
 
     axios
-        .delete(`traders/${traderId}/services/${serviceId}`)
+        .delete(`/traders/${traderId}/services/${serviceId}`)
         .then((apiRes) => {
             console.log(apiRes.data);
             res.redirect("/trader-services");

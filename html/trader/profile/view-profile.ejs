@@ -33,16 +33,63 @@
                 <div class="general-content">
                     <h1>Welcome to your profile!</h1>
 
-                    <h2>Your Details</h2>
-                    <p><strong>Name:</strong> <%= trader.name %></p>
-                    <p><strong>Username:</strong> <%= trader.username %></p>
-                    <p><strong>Email:</strong> <%= trader.email %></p>
+                    <div class="profile-content">
+                        <div class="profile-item top-item">
+                            <img src="/icons/id-badge.svg" class="profile-icon" />
+                            <div class="profile-text">
+                                <p>Name</p> 
+                                <p><%= trader.name %></p>
+                            </div>
+                        </div>
 
-                    <h2>Your Profile</h2>
-                    <p><strong>Trade type:</strong> <%= trader.trade_type_name || "Not set" %></p>
-                    <p><strong>Region/Town:</strong> <%= trader.region || "Not set" %></p>
-                    <p><strong>Availability:</strong> <%= trader.availability || "Not set" %></p>
-                    <p><strong>Bio:</strong> <%= trader.bio || "Not set" %></p>
+                        <div class="profile-item">
+                            <img src="/icons/username.svg" class="profile-icon" />
+                            <div class="profile-text">
+                                <p>Username</p> 
+                                <p><%= trader.username %></p>
+                            </div>
+                        </div>
+
+                        <div class="profile-item">
+                            <img src="/icons/envelope.svg" class="profile-icon" />
+                            <div class="profile-text">
+                                <p>Email</p> 
+                                <p><%= trader.email %></p>
+                            </div>
+                        </div>
+
+                        <div class="profile-item">
+                            <img src="/icons/hammer.svg" class="profile-icon" />
+                            <div class="profile-text">
+                                <p>Trade type</p> 
+                                <p><%= trader.trade_type_name || "Not set" %></p>
+                            </div>
+                        </div>
+
+                        <div class="profile-item">
+                            <img src="/icons/house.svg" class="profile-icon" />
+                            <div class="profile-text">
+                                <p>Region/Town</p> 
+                                <p><%= trader.region || "Not set" %></p>
+                            </div>
+                        </div>
+
+                        <div class="profile-item">
+                            <img src="/icons/calendar.svg" class="profile-icon" />
+                            <div class="profile-text">
+                                <p>Availability</p> 
+                                <p><%= trader.availability || "Not set" %></p>
+                            </div>
+                        </div>
+
+                        <div class="profile-item bottom-item">
+                            <img src="/icons/document.svg" class="profile-icon" />
+                            <div class="profile-text">
+                                <p>Bio</p> 
+                                <p><%= trader.bio || "Not set" %></p>
+                            </div>
+                        </div>
+                    </div>
 
                     <li><a href="/trader-profile/edit/<%= trader.trader_id %>">Edit Profile</a></li>
                 </div>

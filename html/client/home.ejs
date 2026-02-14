@@ -13,7 +13,20 @@
                 <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
                 <ul>
                     <li><a href="trader-directory">Trader Directory</a></li>
-                    <li><a href="trader-login">Trader Login</a></li>
+
+                    <% if (isloggedin) { %>
+
+                    <li><a href="/trader-profile">My Profile</a></li>
+                    <li><a href="/trader-services">Services</a></li>
+                    <li><a href="/trader-bookings">Bookings</a></li>
+                    <li><a href="/trader-login/logout">Logout</a></li>
+
+                    <% } else { %>
+
+                    <li><a href="/trader-login">Trader Login</a></li>
+
+                    <% } %>
+                    
                     <li><a href="contact-us">Contact Us</a></li>
                 </ul>
             </div>

@@ -1,3 +1,5 @@
 exports.getHomePage = (req, res) => {
-    res.render("client/home");
+    const { isloggedin } = req.session;
+
+    res.render("client/home", { isloggedin });
 };

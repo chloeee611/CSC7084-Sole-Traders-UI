@@ -1,12 +1,15 @@
 const axios = require("axios");
 
 exports.getTraderDirectoryPage = async (req, res) => {
+    const { isloggedin } = req.session;
+
     axios
         .get("/traders")
         .then((apiRes) => {
             const traders = apiRes.data.result;
             res.render("client/directory", {
                 traders,
+                isloggedin,
             });
         })
         .catch((err) => {
@@ -16,6 +19,7 @@ exports.getTraderDirectoryPage = async (req, res) => {
 
 exports.getTraderDetailsPage = (req, res) => {
     const { traderId } = req.params;
+    const { isloggedin } = req.session;
 
     axios
         .get(`/traders/${traderId}`)
@@ -33,6 +37,7 @@ exports.getTraderDetailsPage = (req, res) => {
                             services,
                         },
                         bookingMade: req.query.bookingMade,
+                        isloggedin,
                     });
                 })
                 .catch((err) => {

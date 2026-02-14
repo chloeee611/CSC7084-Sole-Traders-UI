@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Trader Details</title>
         <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/login.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -17,7 +18,7 @@
                 <ul>
                     <li><a href="/trader-directory">Trader Directory</a></li>
                     <% if (isloggedin) { %>
-                        <li id="present">My Profile</a></li>
+                        <li id="present">My Profile</li>
                         <li><a href="/trader-services">Services</a></li>
                         <li><a href="/trader-bookings">Bookings</a></li>
                         <li><a href="/trader-login/logout">Logout</a></li>
@@ -31,13 +32,13 @@
                 <div class="general-content">
                     <h1>Edit your profile</h1>
 
-                    <form class="backdrop" action="/trader-profile/edit/<%= trader.trader_id %>" method="post">
+                    <form action="/trader-profile/edit/<%= trader.trader_id %>" method="post">
                         
                         <div class="form">
                             <div>
                                 <div class="form-input-group">
                                     <label>Trade Type</label>
-                                    <select type="text" name="trade_type">
+                                    <select type="text" name="tradeType">
                                         <option></option>
                                         <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
                                             <option 
@@ -71,17 +72,27 @@
                             </div>
 
                             <div>
-                                <label>Availability</label>
-                                <input
-                                    type="text"
-                                    name="availability"
-                                    value="<%= trader.availability %>"
-                                />
+                                <div class="form-input-group">
+                                    <label>Availability</label>
+                                    <input
+                                        type="text"
+                                        name="availability"
+                                        value="<%= trader.availability %>"
+                                    />
+                                </div>
+                                <% if (locals.errorResults && errorResults.availability) { %>
+                                    <p  class="form-error-message"><%= errorResults.availability %></p>
+                                <% } %>
                             </div>
 
                             <div>
-                                <label>Bio</label>
-                                <textarea name="bio"><%= trader.bio %></textarea>
+                                <div class="form-input-group">
+                                    <label>Bio</label>
+                                    <textarea name="bio"><%= trader.bio %></textarea>
+                                </div>
+                                <% if (locals.errorResults && errorResults.bio) { %>
+                                    <p  class="form-error-message"><%= errorResults.bio %></p>
+                                <% } %>
                             </div>
                         </div>
 
