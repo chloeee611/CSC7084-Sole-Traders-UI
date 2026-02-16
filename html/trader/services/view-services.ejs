@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Services</title>
     <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/css/login.css" rel="stylesheet" />
+    <link href="/css/pages/view-services.css" rel="stylesheet" />
+    <link href="/css/table.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -29,11 +30,11 @@
 
         <div id="main-content">
             <div class="general-content">
-                <div class="profile-header">
+                <div class="services-header">
                     <h1>My Services</h1>
-                    <a href="/trader-services/new-service">
-                        <img src="/icons/square-plus.svg" class="profile-icon" />
-                        New Service
+                    <a href="/trader-services/new-service" class="services-add-container" >
+                        <img src="/icons/square-plus.svg" />
+                        <p>New Service</p>
                     </a>
                 </div>
 
@@ -63,7 +64,7 @@
                                     <td>
                                         <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
 
-                                        <form method="post" action="/trader-services/delete/<%= service.service_id %>" style="display:inline;">
+                                        <form method="post" action="/trader-services/delete/<%= service.service_id %>">
                                             <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
                                         </form>
                                     </td>

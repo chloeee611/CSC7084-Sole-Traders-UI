@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trader Profile</title>
     <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/pages/view-profile.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -34,9 +35,9 @@
                     <div class="profile-content">
                         <div class="profile-header">
                             <h1>Personal Info</h1>
-                            <a class="amend-details" href="/trader-profile/edit/<%= trader.trader_id %>">
-                                <img src="/icons/pencil.svg" class="amend-icon" />
-                                Edit Profile
+                            <a class="edit-profile-container" href="/trader-profile/edit/<%= trader.trader_id %>">
+                                <img src="/icons/pencil.svg" />
+                                <p>Edit Profile</p>
                             </a>
                         </div>
                         <div class="profile-item top-item">

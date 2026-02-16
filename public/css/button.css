@@ -1,0 +1,56 @@
+.button {
+    width: 120px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    border: 3px solid rgb(255, 239, 94);
+    background-color: rgb(255, 239, 94);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.137);
+}
+
+.icon-button {
+    background: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    width: 82px;
+    height: 82px;
+    padding: 15px;
+    color: var(--alabaster-grey);
+    background-color: var(--deep-teal);
+    border: 1px solid var(--alabaster-grey);
+    border-radius: 10px;
+}
+
+.icon-button:hover {
+    background-color: var(--evergreen);
+}
+
+.primary-button {
+    display: inline-flex;
+    padding: 15px 25px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--alabaster-grey);
+    background-color: var(--deep-teal);
+    border: 1px solid var(--alabaster-grey);
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    background-color: var(--evergreen);
+}
+
+.secondary-button {
+    padding: 15px 25px;
+    color: var(--iron-grey);
+    background-color: var(--lavender);
+    border: 1px solid var(--alabaster-grey);
+    border-radius: 10px;
+}
