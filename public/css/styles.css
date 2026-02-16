@@ -176,6 +176,19 @@ body {
     aspect-ratio: 1/1;
 }
 
+.amend-icon {
+    width: 30px;
+    aspect-ratio: 1/1;
+    text-decoration: none;
+}
+
+.amend-details {
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
 .icon-button {
     background: none;
     font: inherit;
@@ -312,4 +325,32 @@ td {
     justify-content: center;
     background-color: rgb(27, 27, 27);
     color: white;
+}
+
+.display-area {
+    display: flex;
+    height: 100%;
+    column-gap: 20px;
+}
+
+.filters {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: left;
+    padding: 150px 0px 0px 25px;
+    font-weight: lighter;
+    row-gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.filters input,
+select {
+    width: 70%;
+    border-radius: 4px;
+}
+
+.filters button {
+    width: 70%;
 }

@@ -45,18 +45,42 @@ exports.postNewBooking = (req, res) => {
 //#region Trader
 exports.getAllBookingsPage = (req, res) => {
     const { isloggedin, traderId } = req.session;
+    const { order_by, order_direction, status } = req.query;
 
     if (!isloggedin) {
         res.redirect("/trader-login");
     }
 
+    const bookingStatuses = [
+        { value: "pending", label: "Pending" },
+        { value: "rejected", label: "Rejected" },
+        { value: "confirmed", label: "Confirmed" },
+    ];
+
+    const tableHeaders = [
+        { value: "client_name", label: "Client Name" },
+        { value: "client_email_address", label: "Client Email Address" },
+        { value: "requested_date_time", label: "Date and Time" },
+        { value: "job_description", label: "Job Description" },
+        { value: "status", label: "Status" },
+    ];
+
     axios
-        .get(`/bookings`)
+        .get(`/bookings`, {
+            params: { status, order_by, order_direction },
+        })
         .then((apiRes) => {
             const bookings = apiRes.data.result;
             res.render("trader/bookings/view-bookings", {
                 bookings,
                 trader: { trader_id: traderId },
+                tableHeaders,
+                bookingStatuses,
+                filterParams: {
+                    order_by,
+                    order_direction,
+                    status,
+                },
             });
         })
         .catch((err) => {
