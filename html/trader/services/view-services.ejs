@@ -8,6 +8,7 @@
     <link href="/css/styles.css" rel="stylesheet" />
     <link href="/css/pages/view-services.css" rel="stylesheet" />
     <link href="/css/table.css" rel="stylesheet" />
+    <link href="/css/button.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -62,11 +63,13 @@
                                     <td><%= service.pricing_type %></td>
                                     <td>£<%= service.base_price.toFixed(2) %></td>
                                     <td>
-                                        <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
+                                        <div class="services-action-buttons">
+                                            <a href="/trader-services/edit/<%= service.service_id %>" class="secondary-button">Edit</a>
 
-                                        <form method="post" action="/trader-services/delete/<%= service.service_id %>">
-                                            <button type="submit" onclick="return confirm('Delete this service?')">Delete</button>
-                                        </form>
+                                            <form method="post" action="/trader-services/delete/<%= service.service_id %>">
+                                                <button type="submit" class="danger-button" onclick="return confirm('Delete this service?')">Delete</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             <% }) %>

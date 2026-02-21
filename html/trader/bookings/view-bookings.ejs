@@ -8,6 +8,7 @@
     <link href="/css/styles.css" rel="stylesheet" />
     <link href="/css/pages/view-bookings.css" rel="stylesheet" />
     <link href="/css/table.css" rel="stylesheet" />
+    <link href="/css/button.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -87,13 +88,15 @@
                                             <td><%= booking.job_description %></td>
                                             <td><%= booking.status %></td>
                                             <td><% if (booking.status === "pending") { %>
-                                                <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status">
-                                                    <button id="accept-button" type="submit" name="status" value="confirmed">Accept</button>
-                                                </form>
+                                                <div class="bookings-action-buttons">
+                                                    <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status">
+                                                        <button class="success-button" type="submit" name="status" value="confirmed">Accept</button>
+                                                    </form>
 
-                                                <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status">
-                                                    <button id="reject-button" type="submit" name="status" value="rejected">Reject</button>
-                                                </form>
+                                                    <form method="post" action="/trader-bookings/<%= booking.booking_id %>/status">
+                                                        <button class="danger-button" type="submit" name="status" value="rejected">Reject</button>
+                                                    </form>
+                                                </div>
                                             <% } %></td>
                                         </tr>
                                     <% }) %>

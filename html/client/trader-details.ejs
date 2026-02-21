@@ -8,6 +8,7 @@
         <link href="/css/pages/trader-details.css" rel="stylesheet" />
         <link href="/css/table.css" rel="stylesheet" />
         <link href="/css/form.css" rel="stylesheet" />
+        <link href="/css/button.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -46,31 +47,54 @@
                     <%= trader.name %> - <%= trader.trade_type_name %> - <%=
                     trader.region %>
 
+                    <form class="rating-star-group" action="/trader-directory/<%= trader.trader_id %>/rate" method="post">
+                         <% [1, 2, 3, 4, 5].forEach(rating => { %>
+                            <button name="rating" value="<%= rating %>" type="submit" >
+                                <img id="logo" 
+                                    <% if(locals.currentRating && currentRating >= rating) { %>
+                                            src="/icons/star-solid.svg" 
+                                    <% } else { %>
+                                            src="/icons/star-outline.svg" 
+                                    <% } %>
+                                />
+                            </button>
+                        <% }) %>
+                    </form> 
+
                     <div>
                         <form action="/trader-bookings/bookings/<%= trader.trader_id %>" method="post">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Pricing Type</th>
-                                        <th>Base Price</th>
-                                        <th>Select Service</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% trader.services?.forEach(service => { %>
-                                        <tr>
-                                            <td><%= service.title %></td>
-                                            <td><%= service.description %></td>
-                                            <td><%= service.pricing_type %></td>
-                                            <td><%= service.base_price %></td>
-                                            <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
-                                        </tr>
-                                    <% }) %>
-                                    <!-- TODO: Add service missing error -->
-                                </tbody>
-                            </table>
+                            <div class="table">
+                                <div class="tbl-header">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Pricing Type</th>
+                                                <th>Base Price</th>
+                                                <th>Select Service</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                                <div class="tbl-content">
+                                    <table>
+                                        <tbody>
+                                            <% trader.services?.forEach(service => { %>
+                                                <tr>
+                                                    <td><%= service.title %></td>
+                                                    <td><%= service.description %></td>
+                                                    <td><%= service.pricing_type %></td>
+                                                    <td><%= service.base_price %></td>
+                                                    <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
+                                                </tr>
+                                            <% }) %>
+                                            <!-- TODO: Add service missing error -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
                             <div class="form">
                                 <div>

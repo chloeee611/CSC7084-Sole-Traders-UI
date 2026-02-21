@@ -85,7 +85,12 @@
                                                 <th>
                                                     <a href="/trader-directory?region=<%= filterParams.region %>&trade_type=<%= filterParams.trade_type %>&order_by=<%= value %>&order_direction=<%= filterParams.order_by === value && filterParams.order_direction === 'asc' ? 'dsc' : 'asc'  %>"><%= label %></a>
                                                     <% if(filterParams.order_by === value) { %> 
-                                                        <%= filterParams.order_direction === 'asc' ? 'Up' : 'Down' %>
+                                                        <% if (filterParams.order_direction === 'asc') { %>
+                                                            <!-- TODO: change id and stuff -->
+                                                             <img id="logo" src="/icons/arrow-down-a-z.svg" alt="Sole Traders Logo" />
+                                                        <% } else { %>
+                                                             <img id="logo" src="/icons/arrow-down-z-a.svg" alt="Sole Traders Logo" />
+                                                        <% } %>
                                                     <% } %>
                                                 </th>
                                         <% }) %>
@@ -102,6 +107,7 @@
                                             <td><a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a></td>
                                             <td><%= trader.trade_type_name %></td>
                                             <td><%= trader.region %></td>
+                                            <td><%= trader.average_rating ? Number(trader.average_rating).toFixed(2) : '-' %></td>
                                         </tr>
                                     <% }) %>
                                 </tbody>

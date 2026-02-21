@@ -5,6 +5,7 @@ const axios = require("axios");
 exports.postNewBooking = (req, res) => {
     const payload = req.body;
     const { traderId } = req.params;
+    const { isloggedin } = req.session;
 
     axios
         .post(`bookings`, { ...payload, status: "pending" })
@@ -25,6 +26,7 @@ exports.postNewBooking = (req, res) => {
                             const services = servicesApiRes.data.result;
 
                             return res.render("client/trader-details", {
+                                isloggedin,
                                 trader: {
                                     ...trader,
                                     services,

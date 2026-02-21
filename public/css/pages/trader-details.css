@@ -1,3 +1,19 @@
 #fieldLabel {
     padding: 0px 10px 0px 0px;
 }
+
+.rating-star-group {
+    display: flex;
+}
+
+.rating-star-group button {
+    background: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    border: none;
+}
+
+.rating-star-group button:hover {
+    filter: invert(0.5) sepia(1) saturate(4) hue-rotate(8deg);
+}

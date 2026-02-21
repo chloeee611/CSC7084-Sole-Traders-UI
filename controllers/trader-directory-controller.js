@@ -10,6 +10,7 @@ exports.getTraderDirectoryPage = (req, res) => {
         { value: "name", label: "Trader Name" },
         { value: "trade_type_name", label: "Trader Type" },
         { value: "region", label: "Region" },
+        { value: "average_rating", label: "Average Rating" },
     ];
 
     axios
@@ -48,7 +49,7 @@ exports.getTraderDirectoryPage = (req, res) => {
 
 exports.getTraderDetailsPage = (req, res) => {
     const { traderId } = req.params;
-    const { isloggedin } = req.session;
+    const { isloggedin, currentRatings } = req.session;
 
     axios
         .get(`/traders/${traderId}`)
@@ -61,6 +62,7 @@ exports.getTraderDetailsPage = (req, res) => {
                     const services = servicesApiRes.data.result;
 
                     res.render("client/trader-details", {
+                        currentRating: currentRatings?.[traderId],
                         trader: {
                             ...trader,
                             services,
@@ -77,3 +79,52 @@ exports.getTraderDetailsPage = (req, res) => {
             console.log(`Error making API request: ${err}`);
         });
 };
+
+//#region Client
+
+exports.postRating = (req, res) => {
+    const { rating } = req.body;
+    const { traderId } = req.params;
+    const { isloggedin } = req.session;
+
+    axios
+        .post(`traders/${traderId}/ratings`, { rating: Number(rating) })
+        .then((apiRes) => {
+            req.session.currentRatings = {
+                ...req.session.currentRatings,
+                [traderId]: Number(rating),
+            };
+
+            if (apiRes.status === 201) {
+                res.redirect(`/trader-directory/${traderId}`);
+            }
+        })
+        .catch((err) => {
+            axios
+                .get(`/traders/${traderId}`)
+                .then((apiRes) => {
+                    const trader = apiRes.data.result;
+
+                    axios
+                        .get(`/traders/${traderId}/services`)
+                        .then((servicesApiRes) => {
+                            const services = servicesApiRes.data.result;
+
+                            return res.render("client/trader-details", {
+                                isloggedin,
+                                trader: {
+                                    ...trader,
+                                    services,
+                                },
+                                errorResults:
+                                    err.response.data.validationResults,
+                            });
+                        });
+                })
+                .catch((err) => {
+                    console.log(`Error making API request: ${err}`);
+                });
+        });
+};
+
+//#endregion

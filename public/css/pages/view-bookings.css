@@ -1,25 +1,4 @@
-#accept-button {
-    display: inline-flex;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    color: var(--alabaster-grey);
-    background-color: rgb(0, 128, 15);
-    border: 1px solid var(--alabaster-grey);
-    border-radius: 10px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#reject-button {
-    display: inline-flex;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    color: var(--alabaster-grey);
-    background-color: rgb(152, 0, 0);
-    border: 1px solid var(--alabaster-grey);
-    border-radius: 10px;
-    text-decoration: none;
-    cursor: pointer;
+.bookings-action-buttons {
+    display: flex;
+    column-gap: 3px;
 }
