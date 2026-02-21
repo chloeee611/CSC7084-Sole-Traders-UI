@@ -13,9 +13,13 @@
 
 .welcome-buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 25px;
     margin-top: 20px;
+
+    @media (min-width: 728px) {
+        flex-direction: row;
+    }
 }

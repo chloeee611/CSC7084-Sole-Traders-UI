@@ -1,0 +1,48 @@
+<div id="sidebar">
+    <a href="/"><img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" /></a>
+    <ul>
+        <li>
+            <% if (currentPage === 'directory' || currentPage === 'trader-details') { %>
+                Trader Directory
+            <% } else { %>
+                <a href="trader-directory">Trader Directory</a>
+            <% } %>
+        </li>
+
+        <% if (isloggedin) { %>
+
+        <li>
+            <% if (currentPage === 'edit-profile' || currentPage === 'view-profile') { %>
+                My Profile
+            <% } else { %>
+                <a href="/trader-profile">My Profile</a>
+            <% } %>
+        </li>
+        <li>
+            <% if (currentPage === 'edit-service' || currentPage === 'view-services' || currentPage === 'new-service') { %>
+                Services
+            <% } else { %>
+                <a href="/trader-services">Services</a>
+            <% } %>
+        </li>
+        <li>
+            <% if (currentPage === 'view-bookings') { %>
+                Bookings
+            <% } else { %>
+              <a href="/trader-bookings">Bookings</a>
+            <% } %>
+
+        </li>
+        <li>
+            <a href="/trader-login/logout">Logout</a>
+        </li>
+
+        <% } else { %>
+
+        <li>
+            <a href="/trader-login">Trader Login</a>
+        </li>
+
+        <% } %>
+    </ul>
+</div>

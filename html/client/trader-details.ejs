@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Trader Details</title>
+        <link rel="icon" href="icons/logo.svg" sizes="any" type="image/svg+xml" />
         <link href="/css/styles.css" rel="stylesheet" />
         <link href="/css/pages/trader-details.css" rel="stylesheet" />
         <link href="/css/table.css" rel="stylesheet" />
@@ -16,55 +17,41 @@
             <div id="header">
                 <h1 id="text">SOLE TRADERS</h1>
             </div>
-            <div id="sidebar">
-                <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
-                <ul>
-                    <!-- TODO: need to be able to go back to trader directory from here -->
-                    <li id="present">Trader Directory</li>
 
-                    <% if (isloggedin) { %>
+            <%- include('../partials/nav.ejs', {currentPage: 'trader-details'}) %>
 
-                    <li><a href="/trader-profile">My Profile</a></li>
-                    <li><a href="/trader-services">Services</a></li>
-                    <li><a href="/trader-bookings">Bookings</a></li>
-                    <li><a href="/trader-login/logout">Logout</a></li>
-
-                    <% } else { %>
-
-                    <li><a href="/trader-login">Trader Login</a></li>
-
-                    <% } %>
-
-                    <li><a href="/contact-us">Contact Us</a></li>
-                </ul>
-            </div>
             <div id="main-content">
                 <div class="general-content">
                     <% if(locals.bookingMade && bookingMade) { %>
                         <p>Thank you for your booking</p>
                     <% } %>
-                    <h1><%= trader.name %>'s Details</h1>
-                    <%= trader.name %> - <%= trader.trade_type_name %> - <%=
-                    trader.region %>
 
-                    <form class="rating-star-group" action="/trader-directory/<%= trader.trader_id %>/rate" method="post">
-                         <% [1, 2, 3, 4, 5].forEach(rating => { %>
-                            <button name="rating" value="<%= rating %>" type="submit" >
-                                <img id="logo" 
-                                    <% if(locals.currentRating && currentRating >= rating) { %>
-                                            src="/icons/star-solid.svg" 
-                                    <% } else { %>
-                                            src="/icons/star-outline.svg" 
-                                    <% } %>
-                                />
-                            </button>
-                        <% }) %>
-                    </form> 
+                    <div class="table-filters-header">
+                        <div>
+                            <h1><%= trader.name %>'s Details</h1>
+                            <%= trader.name %> - <%= trader.trade_type_name %> - <%=
+                            trader.region %>
+                        </div>
+
+                        <form class="rating-star-group" action="/trader-directory/<%= trader.trader_id %>/rate" method="post">
+                            <% [1, 2, 3, 4, 5].forEach(rating => { %>
+                                <button name="rating" value="<%= rating %>" type="submit" >
+                                    <img id="star-icon" 
+                                        <% if(locals.currentRating && currentRating >= rating) { %>
+                                                src="/icons/star-solid.svg" 
+                                        <% } else { %>
+                                                src="/icons/star-outline.svg" 
+                                        <% } %>
+                                    />
+                                </button>
+                            <% }) %>
+                        </form> 
+                    </div>
 
                     <div>
                         <form action="/trader-bookings/bookings/<%= trader.trader_id %>" method="post">
                             <div class="table">
-                                <div class="tbl-header">
+                                <div class="tbl-header services">
                                     <table>
                                         <thead>
                                             <tr>

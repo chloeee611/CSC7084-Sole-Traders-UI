@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Trader Details</title>
+        <link rel="icon" href="icons/logo.svg" sizes="any" type="image/svg+xml" />
         <link href="/css/styles.css" rel="stylesheet" />
         <link href="/css/form.css" rel="stylesheet" />
         <link href="/css/button.css" rel="stylesheet" />
@@ -12,23 +13,11 @@
     <body>
         <div id="container">
             <div id="header">
-                <h1 id="text">Sole Traders</h1>
+                <h1 id="text">SOLE TRADERS</h1>
             </div>
-            <div id="sidebar">
-                <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
-                <ul>
-                    <li><a href="/trader-directory">Trader Directory</a></li>
-                    <% if (isloggedin) { %>
-                        <li id="present">My Profile</li>
-                        <li><a href="/trader-services">Services</a></li>
-                        <li><a href="/trader-bookings">Bookings</a></li>
-                        <li><a href="/trader-login/logout">Logout</a></li>
-                    <% } else { %>
-                        <li><a href="/trader-login">Trader Login</a></li>
-                    <% } %>
-                    <li><a href="/contact-us">Contact Us</a></li>
-                </ul>
-            </div>
+            
+            <%- include('../../partials/nav.ejs', {currentPage: 'edit-profile'}) %>
+
             <div id="main-content">
                 <div class="general-content">
                     <h1>Edit your profile</h1>

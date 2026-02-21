@@ -1,107 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trader Profile</title>
+        <link rel="icon" href="icons/logo.svg" sizes="any" type="image/svg+xml" />
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/pages/view-profile.css" rel="stylesheet" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trader Profile</title>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/css/pages/view-profile.css" rel="stylesheet" />
-</head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1 id="text">SOLE TRADERS</h1>
+            </div>
+            
+            <%- include('../../partials/nav.ejs', {currentPage: 'view-profile'}) %>
 
-<body>
-    <div id="container">
-        <div id="header">
-            <h1 id="text">Sole Traders</h1>
-        </div>
-        <div id="sidebar">
-            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
-            <ul>
-                <li><a href="/trader-directory">Trader Directory</a></li>
-                <% if (isloggedin) { %>
-                    <li id="present">My Profile</a></li>
-                    <li><a href="/trader-services">Services</a></li>
-                    <li><a href="/trader-bookings">Bookings</a></li>
-                    <li><a href="/trader-login/logout">Logout</a></li>
-                <% } else { %>
-                    <li><a href="/trader-login">Trader Login</a></li>
-                <% } %>
-                <li><a href="/contact-us">Contact Us</a></li>
-            </ul>
-        </div>
-        <% if (isloggedin) { %>
-            <div id="main-content">
-                <div class="general-content">
-                    <div class="profile-content">
-                        <div class="profile-header">
-                            <h1>Personal Info</h1>
-                            <a class="edit-profile-container" href="/trader-profile/edit/<%= trader.trader_id %>">
-                                <img src="/icons/pencil.svg" />
-                                <p>Edit Profile</p>
-                            </a>
-                        </div>
-                        <div class="profile-item top-item">
-                            <img src="/icons/id-badge.svg" class="profile-icon" />
-                            <div class="profile-text">
-                                <p>Name</p> 
-                                <p><%= trader.name %></p>
+            <% if (isloggedin) { %>
+                <div id="main-content">
+                    <div class="general-content">
+                        <div class="profile-content">
+                            <div class="profile-header">
+                                <h1>Personal Info</h1>
+                                <a class="edit-profile-container" href="/trader-profile/edit/<%= trader.trader_id %>">
+                                    <img src="/icons/pencil.svg" />
+                                    <p>Edit Profile</p>
+                                </a>
                             </div>
-                        </div>
-
-                        <div class="profile-item">
-                            <img src="/icons/username.svg" class="profile-icon" />
-                            <div class="profile-text">
-                                <p>Username</p> 
-                                <p><%= trader.username %></p>
+                            <div class="profile-item top-item">
+                                <img src="/icons/id-badge.svg" class="profile-icon" />
+                                <div class="profile-text">
+                                    <p>Name</p> 
+                                    <p><%= trader.name %></p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="profile-item">
-                            <img src="/icons/envelope.svg" class="profile-icon" />
-                            <div class="profile-text">
-                                <p>Email</p> 
-                                <p><%= trader.email %></p>
+                            <div class="profile-item">
+                                <img src="/icons/username.svg" class="profile-icon" />
+                                <div class="profile-text">
+                                    <p>Username</p> 
+                                    <p><%= trader.username %></p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="profile-item">
-                            <img src="/icons/hammer.svg" class="profile-icon" />
-                            <div class="profile-text">
-                                <p>Trade type</p> 
-                                <p><%= trader.trade_type_name || "Not set" %></p>
+                            <div class="profile-item">
+                                <img src="/icons/envelope.svg" class="profile-icon" />
+                                <div class="profile-text">
+                                    <p>Email</p> 
+                                    <p><%= trader.email %></p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="profile-item">
-                            <img src="/icons/house.svg" class="profile-icon" />
-                            <div class="profile-text">
-                                <p>Region/Town</p> 
-                                <p><%= trader.region || "Not set" %></p>
+                            <div class="profile-item">
+                                <img src="/icons/hammer.svg" class="profile-icon" />
+                                <div class="profile-text">
+                                    <p>Trade type</p> 
+                                    <p><%= trader.trade_type_name || "Not set" %></p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="profile-item">
-                            <img src="/icons/calendar.svg" class="profile-icon" />
-                            <div class="profile-text">
-                                <p>Availability</p> 
-                                <p><%= trader.availability || "Not set" %></p>
+                            <div class="profile-item">
+                                <img src="/icons/house.svg" class="profile-icon" />
+                                <div class="profile-text">
+                                    <p>Region/Town</p> 
+                                    <p><%= trader.region || "Not set" %></p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="profile-item bottom-item">
-                            <img src="/icons/document.svg" class="profile-icon" />
-                            <div class="profile-text">
-                                <p>Bio</p> 
-                                <p><%= trader.bio || "Not set" %></p>
+                            <div class="profile-item">
+                                <img src="/icons/calendar.svg" class="profile-icon" />
+                                <div class="profile-text">
+                                    <p>Availability</p> 
+                                    <p><%= trader.availability || "Not set" %></p>
+                                </div>
+                            </div>
+
+                            <div class="profile-item bottom-item">
+                                <img src="/icons/document.svg" class="profile-icon" />
+                                <div class="profile-text">
+                                    <p>Bio</p> 
+                                    <p><%= trader.bio || "Not set" %></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        <% } else { %>
-            Please login first
-        <% } %>
-    </div>
-</body>
-
+            <% } else { %>
+                Please login first
+            <% } %>
+        </div>
+    </body>
 </html>

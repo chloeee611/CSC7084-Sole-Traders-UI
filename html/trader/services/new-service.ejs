@@ -1,88 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Services</title>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/css/login.css" rel="stylesheet" />
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Services</title>
+        <link rel="icon" href="icons/logo.svg" sizes="any" type="image/svg+xml" />
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/login.css" rel="stylesheet" />
+        <link href="/css/form.css" rel="stylesheet" />
+        <link href="/css/button.css" rel="stylesheet" />
+    </head>
 
-<body>
-    <div id="container">
-        <div id="header">
-            <h1 id="text">SOLE TRADERS</h1>
-        </div>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1 id="text">SOLE TRADERS</h1>
+            </div>
 
-        <div id="sidebar">
-            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
-            <ul>
-                <li><a href="/trader-directory">Trader Directory</a></li>
-                <li><a href="/trader-profile">My Profile</a></li>
-                <li id="present">Services</li>
-                <li><a href="/trader-bookings">Bookings</a></li>
-                <li><a href="/trader-login/logout">Logout</a></li>
-                <li><a href="/contact-us">Contact Us</a></li>
-            </ul>
-        </div>
+            <%- include('../../partials/nav.ejs', {currentPage: 'new-service'}) %>
 
-        <div id="main-content">
-            <div class="general-content">
-                <h1>Add a New Service</h1>
+            <div id="main-content">
+                <div class="general-content">
+                    <h1>Add a New Service</h1>
 
-                <form action="/trader-services/new-service" method="post">
+                    <form action="/trader-services/new-service" method="post">
 
-                    <div class="form">
-                        <div>
-                            <div class="form-input-group">
-                                <label>Title</label>
-                                <input name="title" type="text" />
+                        <div class="form">
+                            <div>
+                                <div class="form-input-group">
+                                    <label>Title</label>
+                                    <input name="title" type="text" />
+                                </div>
+                                <% if (locals.errorResults && errorResults.title) { %>
+                                    <p  class="form-error-message"><%= errorResults.title %></p>
+                                <% } %>
                             </div>
-                            <% if (locals.errorResults && errorResults.title) { %>
-                                <p  class="form-error-message"><%= errorResults.title %></p>
-                            <% } %>
-                        </div>
-                        
-                        <div>
-                            <div class="form-input-group">
-                                <label>Description</label>
-                                <input name="description" type="text" />
+                            
+                            <div>
+                                <div class="form-input-group">
+                                    <label>Description</label>
+                                    <input name="description" type="text" />
+                                </div>
+                                <% if (locals.errorResults && errorResults.description) { %>
+                                    <p  class="form-error-message"><%= errorResults.description %></p>
+                                <% } %>
                             </div>
-                            <% if (locals.errorResults && errorResults.description) { %>
-                                <p  class="form-error-message"><%= errorResults.description %></p>
-                            <% } %>
+
+                            <div>
+                                <div class="form-input-group">
+                                    <label>Pricing Type</label>
+                                    <select name="pricingType">
+                                        <option value="Hourly">Hourly</option>
+                                        <option value="Fixed">Fixed</option>
+                                    </select>
+                                </div>
+                                <% if (locals.errorResults && errorResults.pricingType) { %>
+                                <p  class="form-error-message"><%= errorResults.pricingType %></p>
+                                <% } %>
+                            </div>
+
+                            <div>
+                                <div class="form-input-group">
+                                    <label>Base Price</label>
+                                    <input name="basePrice" type="number" step=".01" />
+                                </div>
+                                <% if (locals.errorResults && errorResults.basePrice) { %>
+                                    <p  class="form-error-message"><%= errorResults.basePrice %></p>
+                                <% } %>
+                            </div>
                         </div>
 
-                        <div>
-                            <div class="form-input-group">
-                                <label>Pricing Type</label>
-                                <select name="pricingType">
-                                    <option value="Hourly">Hourly</option>
-                                    <option value="Fixed">Fixed</option>
-                                </select>
-                            </div>
-                            <% if (locals.errorResults && errorResults.pricingType) { %>
-                            <p  class="form-error-message"><%= errorResults.pricingType %></p>
-                            <% } %>
-                        </div>
-
-                        <div>
-                            <div class="form-input-group">
-                                <label>Base Price</label>
-                                <input name="basePrice" type="number" step=".01" />
-                            </div>
-                            <% if (locals.errorResults && errorResults.basePrice) { %>
-                                <p  class="form-error-message"><%= errorResults.basePrice %></p>
-                            <% } %>
-                        </div>
-                    </div>
-
-                    <button type="submit">Add</button>
-                </form>
+                        <button class="primary-button" type="submit">Add</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

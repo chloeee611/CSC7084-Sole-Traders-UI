@@ -12,6 +12,7 @@ exports.getAllServicesPage = (req, res) => {
         .then((apiRes) => {
             const services = apiRes.data.result;
             res.render("trader/services/view-services", {
+                isloggedin,
                 services,
                 trader: { trader_id: traderId },
             });
@@ -28,7 +29,7 @@ exports.getNewServicePage = (req, res) => {
         res.redirect("/trader-login");
     }
 
-    res.render("trader/services/new-service");
+    res.render("trader/services/new-service", { isloggedin });
 };
 
 exports.getEditServicePage = (req, res) => {
@@ -45,6 +46,7 @@ exports.getEditServicePage = (req, res) => {
             const service = apiRes.data.result;
 
             res.render("trader/services/edit-service", {
+                isloggedin,
                 service,
                 trader: { trader_id: traderId },
             });

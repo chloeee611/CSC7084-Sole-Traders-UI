@@ -1,85 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Services</title>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/css/pages/view-services.css" rel="stylesheet" />
-    <link href="/css/table.css" rel="stylesheet" />
-    <link href="/css/button.css" rel="stylesheet" />
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Services</title>
+        <link rel="icon" href="icons/logo.svg" sizes="any" type="image/svg+xml" />
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/pages/view-services.css" rel="stylesheet" />
+        <link href="/css/table.css" rel="stylesheet" />
+        <link href="/css/button.css" rel="stylesheet" />
+    </head>
 
-<body>
-    <div id="container">
-        <div id="header">
-            <h1 id="text">Sole Traders</h1>
-        </div>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1 id="text">SOLE TRADERS</h1>
+            </div>
 
-        <div id="sidebar">
-            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
-            <ul>
-                <li><a href="/trader-directory">Trader Directory</a></li>
-                <li><a href="/trader-profile">My Profile</a></li>
-                <li id="present">Services</a></li>
-                <li><a href="/trader-bookings">Bookings</a></li>
-                <li><a href="/trader-login/logout">Logout</a></li>
-                <li><a href="/contact-us">Contact Us</a></li>
-            </ul>
-        </div>
+            <%- include('../../partials/nav.ejs', {currentPage: 'view-services'}) %>
 
-        <div id="main-content">
-            <div class="general-content">
-                <div class="services-header">
-                    <h1>My Services</h1>
-                    <a href="/trader-services/new-service" class="services-add-container" >
-                        <img src="/icons/square-plus.svg" />
-                        <p>New Service</p>
-                    </a>
+            <div id="main-content">
+                <div class="general-content">
+                    <div class="services-header">
+                        <h1>My Services</h1>
+                        <a href="/trader-services/new-service" class="services-add-container" >
+                            <img src="/icons/square-plus.svg" />
+                            <p>New Service</p>
+                        </a>
+                    </div>
+
+                    <div class="display-area">
+                        <div class="table">
+                            <div class="tbl-header services">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Pricing Type</th>
+                                            <th>Base Price</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div class="tbl-content">
+                                <table>
+                                    <tbody>
+                                        <% services.forEach(service => { %>
+                                            <tr>
+                                                <td><%= service.title %></td>
+                                                <td><%= service.description %></td>
+                                                <td><%= service.pricing_type %></td>
+                                                <td>£<%= service.base_price.toFixed(2) %></td>
+                                                <td>
+                                                    <div class="services-action-buttons">
+                                                        <a href="/trader-services/edit/<%= service.service_id %>" class="secondary-button">Edit</a>
+
+                                                        <form method="post" action="/trader-services/delete/<%= service.service_id %>">
+                                                            <button type="submit" class="danger-button" onclick="return confirm('Delete this service?')">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div class="tbl-header">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Pricing Type</th>
-                                <th>Base Price</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-
-                <div class="tbl-content">
-                    <table>
-                        <tbody>
-                            <% services.forEach(service => { %>
-                                <tr>
-                                    <td><%= service.title %></td>
-                                    <td><%= service.description %></td>
-                                    <td><%= service.pricing_type %></td>
-                                    <td>£<%= service.base_price.toFixed(2) %></td>
-                                    <td>
-                                        <div class="services-action-buttons">
-                                            <a href="/trader-services/edit/<%= service.service_id %>" class="secondary-button">Edit</a>
-
-                                            <form method="post" action="/trader-services/delete/<%= service.service_id %>">
-                                                <button type="submit" class="danger-button" onclick="return confirm('Delete this service?')">Delete</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

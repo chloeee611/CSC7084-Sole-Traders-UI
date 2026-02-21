@@ -1,124 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trader Directory</title>
+        <link rel="icon" href="icons/logo.svg" sizes="any" type="image/svg+xml" />
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/table.css" rel="stylesheet" />
+        <link href="/css/button.css" rel="stylesheet" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trader Directory</title>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/css/table.css" rel="stylesheet" />
-</head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1 id="text">SOLE TRADERS</h1>
+            </div>
+            
+            <%- include('../partials/nav.ejs', {currentPage: 'directory'}) %>
 
-<body>
-    <div id="container">
-        <div id="header">
-            <h1 id="text">SOLE TRADERS</h1>
-        </div>
-        <div id="sidebar">
-            <img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" />
-            <ul>
-                <li id="present">Trader Directory</li>
-
-                <% if (isloggedin) { %>
-
-                <li><a href="/trader-profile">My Profile</a></li>
-                <li><a href="/trader-services">Services</a></li>
-                <li><a href="/trader-bookings">Bookings</a></li>
-                <li><a href="/trader-login/logout">Logout</a></li>
-
-                <% } else { %>
-
-                <li><a href="/trader-login">Trader Login</a></li>
-
-                <% } %>
-
-                <li><a href="/contact-us">Contact Us</a></li>
-            </ul>
-
-            <form class="filters" action="/trader-directory" method="GET">
-                <input type="hidden" name="order_by" value="<%= filterParams.order_by %>" />
-                <input type="hidden" name="order_direction" value="<%= filterParams.order_direction %>" />
-                
-                <label>Region</label>
-                <div>
-                    <input 
-                        name="region" 
-                        type="text" 
-                        value="<%= filterParams.region %>"
-                    />
-                </div>
-
-                <label>Trade Type</label>
-                <div>
-                    <select type="text" name="trade_type">
-                        <option></option>
-                        <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
-                            <option 
-                                value="<%= trade_type_id %>" 
-                                <% if (trade_type_id == filterParams.trade_type) { %>
-                                selected
-                                <% } %>
-                            >
-                                <%=trade_type_name%>
-                            </option>
-                        <% }) %>
-                    </select>
-                </div>
-
-                <button type="submit">Filter</button>
-            </form>
-        </div>
-        <div id="main-content">
-            <div class="general-content">
-                <h1>Trader Directory</h1>
-                <p>Click each trader's name to view their profile</p>
-
-                <div class="display-area">
-                    
-
-                    <div class="table">
-                        <div class="tbl-header">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <% tableHeaders.forEach(({value, label}) => { %>
-                                                <th>
-                                                    <a href="/trader-directory?region=<%= filterParams.region %>&trade_type=<%= filterParams.trade_type %>&order_by=<%= value %>&order_direction=<%= filterParams.order_by === value && filterParams.order_direction === 'asc' ? 'dsc' : 'asc'  %>"><%= label %></a>
-                                                    <% if(filterParams.order_by === value) { %> 
-                                                        <% if (filterParams.order_direction === 'asc') { %>
-                                                            <!-- TODO: change id and stuff -->
-                                                             <img id="logo" src="/icons/arrow-down-a-z.svg" alt="Sole Traders Logo" />
-                                                        <% } else { %>
-                                                             <img id="logo" src="/icons/arrow-down-z-a.svg" alt="Sole Traders Logo" />
-                                                        <% } %>
-                                                    <% } %>
-                                                </th>
-                                        <% }) %>
-                                    </tr>
-                                </thead>
-                            </table>
+            <div id="main-content">
+                <div class="general-content">
+                    <div class="table-filters-header">
+                        <div>
+                            <h1>Trader Directory</h1>
+                            <p class="margin-removal">Click each trader's name to view their profile</p>
                         </div>
+                        
+                        <form class="filters" action="/trader-directory" method="GET">
+                            <input type="hidden" name="order_by" value="<%= filterParams.order_by %>" />
+                            <input type="hidden" name="order_direction" value="<%= filterParams.order_direction %>" />
+                            
+                            <div>
+                                <label>Region</label>
+                                <div>
+                                    <input 
+                                        name="region" 
+                                        type="text" 
+                                        value="<%= filterParams.region %>"
+                                    />
+                                </div>
+                            </div>
 
-                        <div class="tbl-content">
-                            <table>
-                                <tbody>
-                                    <% traders.forEach(trader => { %>
+                            <div>
+                                <label>Trade Type</label>
+                                <div>
+                                    <select type="text" name="trade_type">
+                                        <option></option>
+                                        <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
+                                            <option 
+                                                value="<%= trade_type_id %>" 
+                                                <% if (trade_type_id == filterParams.trade_type) { %>
+                                                selected
+                                                <% } %>
+                                            >
+                                                <%=trade_type_name%>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit">Filter</button>
+                        </form>
+                    </div>
+
+                    <div class="display-area">              
+                        <div class="table">
+                            <div class="tbl-header">
+                                <table>
+                                    <thead>
                                         <tr>
-                                            <td><a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a></td>
-                                            <td><%= trader.trade_type_name %></td>
-                                            <td><%= trader.region %></td>
-                                            <td><%= trader.average_rating ? Number(trader.average_rating).toFixed(2) : '-' %></td>
+                                            <% tableHeaders.forEach(({value, label}) => { %>
+                                                    <th>
+                                                        <a class="sort-header" href="/trader-directory?region=<%= filterParams.region %>&trade_type=<%= filterParams.trade_type %>&order_by=<%= value %>&order_direction=<%= filterParams.order_by === value && filterParams.order_direction === 'asc' ? 'dsc' : 'asc'  %>">
+                                                            <%= label %>
+                                                            <% if(filterParams.order_by === value) { %> 
+                                                                <% if (filterParams.order_direction === 'asc') { %>
+                                                                    <img class="sort-icon" src="/icons/arrow-down-a-z.svg" alt="A to Z sort" />
+                                                                <% } else { %>
+                                                                    <img class="sort-icon" src="/icons/arrow-down-z-a.svg" alt="Z to A sort" />
+                                                                <% } %>
+                                                            <% } %>
+                                                        </a>  
+                                                    </th>
+                                            <% }) %>
                                         </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div class="tbl-content">
+                                <table>
+                                    <tbody>
+                                        <% traders.forEach(trader => { %>
+                                            <tr>
+                                                <td><a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a></td>
+                                                <td><%= trader.trade_type_name %></td>
+                                                <td><%= trader.region %></td>
+                                                <td><%= trader.average_rating ? Number(trader.average_rating).toFixed(2) : '-' %></td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
+                
                 </div>
-               
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

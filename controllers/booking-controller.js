@@ -74,6 +74,7 @@ exports.getAllBookingsPage = (req, res) => {
         .then((apiRes) => {
             const bookings = apiRes.data.result;
             res.render("trader/bookings/view-bookings", {
+                isloggedin,
                 bookings,
                 trader: { trader_id: traderId },
                 tableHeaders,
