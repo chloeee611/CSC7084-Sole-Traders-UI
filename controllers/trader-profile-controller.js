@@ -25,30 +25,28 @@ exports.getEditDetailsPage = (req, res) => {
         res.redirect("/trader-login");
     }
 
+    const traderRequest = axios.get(`/traders/${traderId}`);
+    const tradeTypesRequest = axios.get("/trade-types");
+
     axios
-        .get(`/traders/${traderId}`)
-        .then((traderApiRes) => {
-            const trader = traderApiRes.data.result;
+        .all([traderRequest, tradeTypesRequest])
+        .then(
+            axios.spread((traderApiRes, tradeTypeApiRes) => {
+                const trader = traderApiRes.data.result;
 
-            if (!trader) {
-                res.redirect("/trader-login");
-            }
+                if (!trader) {
+                    res.redirect("/trader-login");
+                }
 
-            axios
-                .get("/trade-types")
-                .then((tradeTypeApiRes) => {
-                    const tradeTypes = tradeTypeApiRes.data.result;
+                const tradeTypes = tradeTypeApiRes.data.result;
 
-                    res.render("trader/profile/edit-profile", {
-                        isloggedin,
-                        trader,
-                        tradeTypes,
-                    });
-                })
-                .catch((err) => {
-                    console.log(`Error making API request: ${err}`);
+                res.render("trader/profile/edit-profile", {
+                    isloggedin,
+                    trader,
+                    tradeTypes,
                 });
-        })
+            }),
+        )
         .catch((err) => {
             console.log(`Error making API request: ${err}`);
         });
@@ -69,32 +67,28 @@ exports.postDetails = (req, res) => {
             res.redirect("/trader-profile");
         })
         .catch((err) => {
+            const traderRequest = axios.get(`/traders/${traderId}`);
+            const tradeTypesRequest = axios.get("/trade-types");
+
             axios
-                .get(`/traders/${traderId}`)
-                .then((traderApiRes) => {
-                    const trader = traderApiRes.data.result;
+                .all([traderRequest, tradeTypesRequest])
+                .then(
+                    axios.spread((traderApiRes, tradeTypeApiRes) => {
+                        const trader = traderApiRes.data.result;
 
-                    if (!trader) {
-                        res.redirect("/trader-login");
-                    }
+                        if (!trader) {
+                            res.redirect("/trader-login");
+                        }
 
-                    axios
-                        .get("/trade-types")
-                        .then((tradeTypeApiRes) => {
-                            const tradeTypes = tradeTypeApiRes.data.result;
-
-                            res.render("trader/profile/edit-profile", {
-                                errorResults:
-                                    err.response.data.validationResults,
-                                isloggedin,
-                                trader,
-                                tradeTypes,
-                            });
-                        })
-                        .catch((err) => {
-                            console.log(`Error making API request: ${err}`);
+                        const tradeTypes = tradeTypeApiRes.data.result;
+                        res.render("trader/profile/edit-profile", {
+                            errorResults: err.response.data.validationResults,
+                            isloggedin,
+                            trader,
+                            tradeTypes,
                         });
-                })
+                    }),
+                )
                 .catch((err) => {
                     console.log(`Error making API request: ${err}`);
                 });

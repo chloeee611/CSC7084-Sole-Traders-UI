@@ -13,35 +13,33 @@ exports.getTraderDirectoryPage = (req, res) => {
         { value: "average_rating", label: "Average Rating" },
     ];
 
+    const tradersRequest = axios.get("/traders", {
+        params: { region, trade_type, order_by, order_direction },
+    });
+    const tradeTypesRequest = axios.get("/trade-types");
+
     axios
-        .get("/traders", {
-            params: { region, trade_type, order_by, order_direction },
-        })
-        .then((apiRes) => {
-            const traders = apiRes.data.result;
+        .all([tradersRequest, tradeTypesRequest])
+        .then(
+            axios.spread((tradersApiRes, tradeTypeApiRes) => {
+                const traders = tradersApiRes.data.result;
 
-            axios
-                .get("/trade-types")
-                .then((tradeTypeApiRes) => {
-                    const tradeTypes = tradeTypeApiRes.data.result;
+                const tradeTypes = tradeTypeApiRes.data.result;
 
-                    res.render("client/directory", {
-                        traders,
-                        isloggedin,
-                        tableHeaders,
-                        tradeTypes,
-                        filterParams: {
-                            region,
-                            trade_type,
-                            order_direction,
-                            order_by,
-                        },
-                    });
-                })
-                .catch((err) => {
-                    console.log(`Error making API request: ${err}`);
+                res.render("client/directory", {
+                    traders,
+                    isloggedin,
+                    tableHeaders,
+                    tradeTypes,
+                    filterParams: {
+                        region,
+                        trade_type,
+                        order_direction,
+                        order_by,
+                    },
                 });
-        })
+            }),
+        )
         .catch((err) => {
             console.log(`Error making API request: ${err}`);
         });
@@ -51,30 +49,27 @@ exports.getTraderDetailsPage = (req, res) => {
     const { traderId } = req.params;
     const { isloggedin, currentRatings } = req.session;
 
+    const traderRequest = axios.get(`/traders/${traderId}`);
+    const servicesRequest = axios.get(`/traders/${traderId}/services`);
+
     axios
-        .get(`/traders/${traderId}`)
-        .then((apiRes) => {
-            const trader = apiRes.data.result;
+        .all([traderRequest, servicesRequest])
+        .then(
+            axios.spread((traderApiRes, servicesApiRes) => {
+                const trader = traderApiRes.data.result;
+                const services = servicesApiRes.data.result;
 
-            axios
-                .get(`/traders/${traderId}/services`)
-                .then((servicesApiRes) => {
-                    const services = servicesApiRes.data.result;
-
-                    res.render("client/trader-details", {
-                        currentRating: currentRatings?.[traderId],
-                        trader: {
-                            ...trader,
-                            services,
-                        },
-                        bookingMade: req.query.bookingMade,
-                        isloggedin,
-                    });
-                })
-                .catch((err) => {
-                    console.log(`Error making API request: ${err}`);
+                res.render("client/trader-details", {
+                    currentRating: currentRatings?.[traderId],
+                    trader: {
+                        ...trader,
+                        services,
+                    },
+                    bookingMade: req.query.bookingMade,
+                    isloggedin,
                 });
-        })
+            }),
+        )
         .catch((err) => {
             console.log(`Error making API request: ${err}`);
         });
@@ -85,7 +80,7 @@ exports.getTraderDetailsPage = (req, res) => {
 exports.postRating = (req, res) => {
     const { rating } = req.body;
     const { traderId } = req.params;
-    const { isloggedin } = req.session;
+    const { isloggedin, currentRatings } = req.session;
 
     axios
         .post(`traders/${traderId}/ratings`, { rating: Number(rating) })
@@ -100,27 +95,27 @@ exports.postRating = (req, res) => {
             }
         })
         .catch((err) => {
+            const traderRequest = axios.get(`/traders/${traderId}`);
+            const servicesRequest = axios.get(`/traders/${traderId}/services`);
+
             axios
-                .get(`/traders/${traderId}`)
-                .then((apiRes) => {
-                    const trader = apiRes.data.result;
+                .all([traderRequest, servicesRequest])
+                .then(
+                    axios.spread((traderApiRes, servicesApiRes) => {
+                        const trader = traderApiRes.data.result;
+                        const services = servicesApiRes.data.result;
 
-                    axios
-                        .get(`/traders/${traderId}/services`)
-                        .then((servicesApiRes) => {
-                            const services = servicesApiRes.data.result;
-
-                            return res.render("client/trader-details", {
-                                isloggedin,
-                                trader: {
-                                    ...trader,
-                                    services,
-                                },
-                                errorResults:
-                                    err.response.data.validationResults,
-                            });
+                        return res.render("client/trader-details", {
+                            currentRating: currentRatings?.[traderId],
+                            isloggedin,
+                            trader: {
+                                ...trader,
+                                services,
+                            },
+                            errorResults: err.response.data.validationResults,
                         });
-                })
+                    }),
+                )
                 .catch((err) => {
                     console.log(`Error making API request: ${err}`);
                 });

@@ -5,7 +5,7 @@ const axios = require("axios");
 exports.postNewBooking = (req, res) => {
     const payload = req.body;
     const { traderId } = req.params;
-    const { isloggedin } = req.session;
+    const { isloggedin, currentRatings } = req.session;
 
     axios
         .post(`bookings`, { ...payload, status: "pending" })
@@ -15,27 +15,27 @@ exports.postNewBooking = (req, res) => {
             }
         })
         .catch((err) => {
+            const traderRequest = axios.get(`/traders/${traderId}`);
+            const servicesRequest = axios.get(`/traders/${traderId}/services`);
+
             axios
-                .get(`/traders/${traderId}`)
-                .then((apiRes) => {
-                    const trader = apiRes.data.result;
+                .all([traderRequest, servicesRequest])
+                .then(
+                    axios.spread((traderApiRes, servicesApiRes) => {
+                        const trader = traderApiRes.data.result;
+                        const services = servicesApiRes.data.result;
 
-                    axios
-                        .get(`/traders/${traderId}/services`)
-                        .then((servicesApiRes) => {
-                            const services = servicesApiRes.data.result;
-
-                            return res.render("client/trader-details", {
-                                isloggedin,
-                                trader: {
-                                    ...trader,
-                                    services,
-                                },
-                                errorResults:
-                                    err.response.data.validationResults,
-                            });
+                        return res.render("client/trader-details", {
+                            currentRating: currentRatings?.[traderId],
+                            isloggedin,
+                            trader: {
+                                ...trader,
+                                services,
+                            },
+                            errorResults: err.response.data.validationResults,
                         });
-                })
+                    }),
+                )
                 .catch((err) => {
                     console.log(`Error making API request: ${err}`);
                 });
