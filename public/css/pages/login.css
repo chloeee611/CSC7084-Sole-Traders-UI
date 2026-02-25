@@ -1,9 +1,14 @@
 body {
+    box-sizing: border-box;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--alabaster-grey);
+
+    @media (max-width: 768px) {
+        padding: 0 30px;
+    }
 }
 
 .backdrop {
@@ -16,6 +21,11 @@ body {
     align-items: center;
     padding: 50px 0px;
     gap: 30px;
+    position: relative;
+
+    @media (max-width: 768px) {
+        padding: 50px 30px;
+    }
 }
 
 #title {
@@ -26,4 +36,30 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
+}
+
+.buttons {
+    display: flex;
+    gap: 30px;
+}
+
+.login-link {
+    position: absolute;
+    top: 10px;
+    left: 25px;
+}
+
+.arrow-button {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: var(--alabaster-grey);
+}
+
+.arrow {
+    height: 20px;
+    width: 20px;
+    padding-right: 2px;
+    color: var(--alabaster-grey);
+    filter: invert(1.1) sepia(1) saturate(1);
 }

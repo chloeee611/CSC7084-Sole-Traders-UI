@@ -1,15 +1,25 @@
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-header h1 {
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
+}
+
 .profile-content {
     display: flex;
     flex-direction: column;
     align-self: center;
     row-gap: 4px;
-    width: 50%;
-}
+    min-width: 50%;
 
-.profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 }
 
 .profile-item {
