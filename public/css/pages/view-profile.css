@@ -15,10 +15,12 @@
     flex-direction: column;
     align-self: center;
     row-gap: 4px;
-    min-width: 50%;
+    width: 50%;
+    min-width: 400px;
 
     @media (max-width: 768px) {
         width: 100%;
+        min-width: auto;
     }
 }
 

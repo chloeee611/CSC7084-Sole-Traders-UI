@@ -7,6 +7,10 @@
 
 .welcome h1 {
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
 }
 
 .welcome-buttons {

@@ -4,6 +4,12 @@
     align-items: center;
 }
 
+.services-header h1 {
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
+}
+
 .services-add-container {
     display: flex;
     align-items: center;

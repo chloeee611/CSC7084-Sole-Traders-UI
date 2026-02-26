@@ -56,7 +56,9 @@
                                                 <td>£<%= service.base_price.toFixed(2) %></td>
                                                 <td>
                                                     <div class="services-action-buttons">
-                                                        <a href="/trader-services/edit/<%= service.service_id %>" class="secondary-button">Edit</a>
+                                                        <div class="secondary-button">
+                                                            <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
+                                                        </div>
 
                                                         <form method="post" action="/trader-services/delete/<%= service.service_id %>">
                                                             <button type="submit" class="danger-button" onclick="return confirm('Delete this service?')">Delete</button>

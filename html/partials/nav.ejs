@@ -2,24 +2,24 @@
     <a class="home-button" href="/"><img id="logo" src="/icons/logo.svg" alt="Sole Traders Logo" /></a>
     <ul>
         <li>
-            <% if (currentPage === 'directory' || currentPage === 'trader-details') { %>
+            <% if (currentPage === 'directory') { %>
                 Trader Directory
             <% } else { %>
-                <a href="trader-directory">Trader Directory</a>
+                <a href="/trader-directory">Trader Directory</a>
             <% } %>
         </li>
 
         <% if (isloggedin) { %>
 
         <li>
-            <% if (currentPage === 'edit-profile' || currentPage === 'view-profile') { %>
+            <% if (currentPage === 'view-profile') { %>
                 My Profile
             <% } else { %>
                 <a href="/trader-profile">My Profile</a>
             <% } %>
         </li>
         <li>
-            <% if (currentPage === 'edit-service' || currentPage === 'view-services' || currentPage === 'new-service') { %>
+            <% if (currentPage === 'view-services') { %>
                 Services
             <% } else { %>
                 <a href="/trader-services">Services</a>

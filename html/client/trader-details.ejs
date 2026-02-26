@@ -45,6 +45,9 @@
                                     />
                                 </button>
                             <% }) %>
+                            <% if (trader.average_rating) { %>
+                                <div>(<%= Math.round(Number(trader.average_rating) * 10) / 10 %>)</div>
+                            <% } %>
                         </form> 
                     </div>
 

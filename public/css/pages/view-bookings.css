@@ -2,3 +2,18 @@
     display: flex;
     column-gap: 3px;
 }
+
+.bookings-header {
+    @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+}
+
+.bookings-header h1 {
+    @media (max-width: 768px) {
+        font-size: 20px;
+        margin: 0;
+    }
+}

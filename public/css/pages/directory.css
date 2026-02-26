@@ -1,0 +1,17 @@
+.directory-header {
+    @media (max-width: 768px) {
+        font-size: 20px;
+    }
+}
+
+.directory-list {
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.directory-table {
+    @media (max-width: 768px) {
+        display: none;
+    }
+}

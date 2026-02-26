@@ -8,6 +8,9 @@
         <link href="/css/styles.css" rel="stylesheet" />
         <link href="/css/table.css" rel="stylesheet" />
         <link href="/css/button.css" rel="stylesheet" />
+        <link href="/css/form.css" rel="stylesheet" />
+        <link href="/css/list.css" rel="stylesheet" />
+        <link href="/css/pages/directory.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -22,42 +25,38 @@
                 <div class="general-content">
                     <div class="table-filters-header">
                         <div>
-                            <h1>Trader Directory</h1>
-                            <p class="margin-removal">Click each trader's name to view their profile</p>
+                            <h1 class="directory-header">Trader Directory</h1>
+                            <!-- <p class=" margin-removal">Click each trader's name to view their profile</p> -->
                         </div>
                         
                         <form class="filters" action="/trader-directory" method="GET">
                             <input type="hidden" name="order_by" value="<%= filterParams.order_by %>" />
                             <input type="hidden" name="order_direction" value="<%= filterParams.order_direction %>" />
-                            
+
                             <div>
                                 <label>Region</label>
-                                <div>
-                                    <input 
-                                        name="region" 
-                                        type="text" 
-                                        value="<%= filterParams.region %>"
-                                    />
-                                </div>
+                                <input 
+                                    name="region" 
+                                    type="text" 
+                                    value="<%= filterParams.region %>"
+                                />
                             </div>
 
                             <div>
                                 <label>Trade Type</label>
-                                <div>
-                                    <select type="text" name="trade_type">
-                                        <option></option>
-                                        <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
-                                            <option 
-                                                value="<%= trade_type_id %>" 
-                                                <% if (trade_type_id == filterParams.trade_type) { %>
-                                                selected
-                                                <% } %>
-                                            >
-                                                <%=trade_type_name%>
-                                            </option>
-                                        <% }) %>
-                                    </select>
-                                </div>
+                                <select type="text" name="trade_type">
+                                    <option></option>
+                                    <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
+                                        <option 
+                                            value="<%= trade_type_id %>" 
+                                            <% if (trade_type_id == filterParams.trade_type) { %>
+                                            selected
+                                            <% } %>
+                                        >
+                                            <%=trade_type_name%>
+                                        </option>
+                                    <% }) %>
+                                </select>
                             </div>
 
                             <button type="submit">Filter</button>
@@ -65,7 +64,7 @@
                     </div>
 
                     <div class="display-area">              
-                        <div class="table">
+                        <div class="table directory-table">
                             <div class="tbl-header">
                                 <table>
                                     <thead>
@@ -84,6 +83,7 @@
                                                         </a>  
                                                     </th>
                                             <% }) %>
+                                            <th class="action-header">Action</th> 
                                         </tr>
                                     </thead>
                                 </table>
@@ -94,14 +94,60 @@
                                     <tbody>
                                         <% traders.forEach(trader => { %>
                                             <tr>
-                                                <td><a href="/trader-directory/<%= trader.trader_id %>"><%= trader.name %></a></td>
+                                                <td><%= trader.name %></td>
                                                 <td><%= trader.trade_type_name %></td>
                                                 <td><%= trader.region %></td>
                                                 <td><%= trader.average_rating ? Number(trader.average_rating).toFixed(2) : '-' %></td>
+                                                <td>
+                                                    <div class="secondary-button">
+                                                        <a href="/trader-directory/<%= trader.trader_id %>">View</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         <% }) %>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+
+                        <div class="table directory-list">
+                            <!-- <div class="tbl-header">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <% tableHeaders.forEach(({value, label}) => { %>
+                                                    <th>
+                                                        <a class="sort-header" href="/trader-directory?region=<%= filterParams.region %>&trade_type=<%= filterParams.trade_type %>&order_by=<%= value %>&order_direction=<%= filterParams.order_by === value && filterParams.order_direction === 'asc' ? 'dsc' : 'asc'  %>">
+                                                            <%= label %>
+                                                            <% if(filterParams.order_by === value) { %> 
+                                                                <% if (filterParams.order_direction === 'asc') { %>
+                                                                    <img class="sort-icon" src="/icons/arrow-down-a-z.svg" alt="A to Z sort" />
+                                                                <% } else { %>
+                                                                    <img class="sort-icon" src="/icons/arrow-down-z-a.svg" alt="Z to A sort" />
+                                                                <% } %>
+                                                            <% } %>
+                                                        </a>  
+                                                    </th>
+                                            <% }) %>
+                                            <th class="action-header">Action</th> 
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div> -->
+
+                            <div class="list">
+                                <% traders.forEach(trader => { %>
+                                    <div class="list-item">
+                                        <div>Name - <%= trader.name %></div>
+                                        <div>Trade Type - <%= trader.trade_type_name %></div>
+                                        <div>Region - <%= trader.region %></div>
+                                        <div>Rating - <%= trader.average_rating ? Number(trader.average_rating).toFixed(2) : '-' %></div>
+                                        <div class="secondary-button">
+                                            <a href="/trader-directory/<%= trader.trader_id %>">View</a>
+                                        </div>
+                                    </div>
+                                    -----------------------------------------
+                                <% }) %>
                             </div>
                         </div>
                     </div>
