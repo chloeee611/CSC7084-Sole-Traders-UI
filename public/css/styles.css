@@ -82,7 +82,6 @@ body {
     grid-column: 1;
     grid-row: 1 / span 3;
     width: 170px;
-    /* height: 100vh; */
     background-color: var(--mint-leaf);
     font-weight: bold;
 

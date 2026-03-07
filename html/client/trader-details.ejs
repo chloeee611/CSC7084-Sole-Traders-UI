@@ -10,6 +10,7 @@
         <link href="/css/table.css" rel="stylesheet" />
         <link href="/css/form.css" rel="stylesheet" />
         <link href="/css/button.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.js" integrity="sha512-D4pL3vNgjkHR/qq+nZywuS6Hg1gwR+UzrdBW6Yg8l26revKyQHMgPq9CLJ2+HHalepS+NuGw1ayCCsGXu9JCXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
 
     <body>
@@ -68,23 +69,31 @@
                                     </table>
                                 </div>
 
-                                <div class="tbl-content">
-                                    <table>
-                                        <tbody>
-                                            <% trader.services?.forEach(service => { %>
-                                                <tr>
-                                                    <td><%= service.title %></td>
-                                                    <td><%= service.description %></td>
-                                                    <td><%= service.pricing_type %></td>
-                                                    <td><%= service.base_price %></td>
-                                                    <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
-                                                </tr>
-                                            <% }) %>
-                                            <!-- TODO: Add service missing error -->
-                                        </tbody>
-                                    </table>
+                                <div class="tbl-content <%= locals.errorResults && errorResults.serviceId ? 'tbl-error' : '' %>">
+                                    <% if (trader.services.length > 0) { %>
+                                        <table>
+                                            <tbody>
+                                                <% trader.services?.forEach(service => { %>
+                                                    <tr>
+                                                        <td><%= service.title %></td>
+                                                        <td><%= service.description %></td>
+                                                        <td><%= service.pricing_type %></td>
+                                                        <td>£<%= service.base_price.toFixed(2) %></td>
+                                                        <td><input type="radio" name="serviceId" value="<%= service.service_id %>" /></td>
+                                                    </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    <% } else { %>
+                                        <div class="tbl-empty">
+                                            This trader has no services yet. Please check back later.
+                                        </div>
+                                    <% } %>
                                 </div>
                             </div>
+                             <% if (locals.errorResults && errorResults.serviceId) { %>
+                                <p  class="form-error-message"><%= errorResults.serviceId %></p>
+                            <% } %>
 
                             <div class="form">
                                 <div>
@@ -128,12 +137,29 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="primary-button">Request Booking</button>
+                            <button type="submit" class="primary-button" <%= trader.services.length === 0 ? 'disabled' : '' %>>Request Booking</button>
                         </form>
                     </div>
                 </div>
-
+            </div>
+            <div class="chart-area">
+                <canvas id="date-canvas"></canvas>
+                <canvas id="service-canvas"></canvas>
             </div>
         </div>
     </body>
+
+    <script src="/js/chartfunctions.js"></script>
+    <script>
+        const dateDataJson = `<%- JSON.stringify(bookingsByDate) %>`;
+        const dateData = JSON.parse(dateDataJson);
+        const dateChart = createBarChart(dateData.map(({ date }) => date), dateData.map(({ count }) => count), "Bookings by Date");
+        new Chart("date-canvas", dateChart);
+    </script>
+    <script>
+        const serviceDataJson = `<%- JSON.stringify(bookingsByService) %>`;
+        const serviceData = JSON.parse(serviceDataJson);
+        const serviceChart = createPieChart(serviceData.map(({ title }) => title), serviceData.map(({ count }) => count), "Bookings by Service");
+        new Chart("service-canvas", serviceChart);
+    </script>
 </html>

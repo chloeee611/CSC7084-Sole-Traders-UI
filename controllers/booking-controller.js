@@ -17,24 +17,48 @@ exports.postNewBooking = (req, res) => {
         .catch((err) => {
             const traderRequest = axios.get(`/traders/${traderId}`);
             const servicesRequest = axios.get(`/traders/${traderId}/services`);
+            const dateChartRequest = axios.get(
+                `/bookings/data/date?trader_id=${traderId}`,
+            );
+            const serviceChartRequest = axios.get(
+                `/bookings/data/service?trader_id=${traderId}`,
+            );
 
             axios
-                .all([traderRequest, servicesRequest])
+                .all([
+                    traderRequest,
+                    servicesRequest,
+                    dateChartRequest,
+                    serviceChartRequest,
+                ])
                 .then(
-                    axios.spread((traderApiRes, servicesApiRes) => {
-                        const trader = traderApiRes.data.result;
-                        const services = servicesApiRes.data.result;
+                    axios.spread(
+                        (
+                            traderApiRes,
+                            servicesApiRes,
+                            dateChartApiRes,
+                            serviceChartApiRes,
+                        ) => {
+                            const trader = traderApiRes.data.result;
+                            const services = servicesApiRes.data.result;
+                            const bookingsByDate = dateChartApiRes.data.result;
+                            const bookingsByService =
+                                serviceChartApiRes.data.result;
 
-                        return res.render("client/trader-details", {
-                            currentRating: currentRatings?.[traderId],
-                            isloggedin,
-                            trader: {
-                                ...trader,
-                                services,
-                            },
-                            errorResults: err.response.data.validationResults,
-                        });
-                    }),
+                            return res.render("client/trader-details", {
+                                currentRating: currentRatings?.[traderId],
+                                isloggedin,
+                                trader: {
+                                    ...trader,
+                                    services,
+                                },
+                                errorResults:
+                                    err.response.data.validationResults,
+                                bookingsByDate,
+                                bookingsByService,
+                            });
+                        },
+                    ),
                 )
                 .catch((err) => {
                     console.log(`Error making API request: ${err}`);
@@ -69,7 +93,7 @@ exports.getAllBookingsPage = (req, res) => {
 
     axios
         .get(`/bookings`, {
-            params: { status, order_by, order_direction },
+            params: { status, order_by, order_direction, trader_id: traderId },
         })
         .then((apiRes) => {
             const bookings = apiRes.data.result;

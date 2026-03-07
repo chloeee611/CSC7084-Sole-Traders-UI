@@ -27,3 +27,11 @@
     margin: 0 auto 0 auto;
     padding: 0px;
 }
+
+.chart-area {
+    display: grid;
+    gap: 100px;
+    width: 40%;
+    padding: 100px 0 150px 60px;
+    grid-template-columns: 1fr 1fr;
+}

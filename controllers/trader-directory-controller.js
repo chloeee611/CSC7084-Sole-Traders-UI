@@ -51,24 +51,46 @@ exports.getTraderDetailsPage = (req, res) => {
 
     const traderRequest = axios.get(`/traders/${traderId}`);
     const servicesRequest = axios.get(`/traders/${traderId}/services`);
+    const dateChartRequest = axios.get(
+        `/bookings/data/date?trader_id=${traderId}`,
+    );
+    const serviceChartRequest = axios.get(
+        `/bookings/data/service?trader_id=${traderId}`,
+    );
 
     axios
-        .all([traderRequest, servicesRequest])
+        .all([
+            traderRequest,
+            servicesRequest,
+            dateChartRequest,
+            serviceChartRequest,
+        ])
         .then(
-            axios.spread((traderApiRes, servicesApiRes) => {
-                const trader = traderApiRes.data.result;
-                const services = servicesApiRes.data.result;
+            axios.spread(
+                (
+                    traderApiRes,
+                    servicesApiRes,
+                    dateChartApiRes,
+                    serviceChartApiRes,
+                ) => {
+                    const trader = traderApiRes.data.result;
+                    const services = servicesApiRes.data.result;
+                    const bookingsByDate = dateChartApiRes.data.result;
+                    const bookingsByService = serviceChartApiRes.data.result;
 
-                res.render("client/trader-details", {
-                    currentRating: currentRatings?.[traderId],
-                    trader: {
-                        ...trader,
-                        services,
-                    },
-                    bookingMade: req.query.bookingMade,
-                    isloggedin,
-                });
-            }),
+                    res.render("client/trader-details", {
+                        currentRating: currentRatings?.[traderId],
+                        trader: {
+                            ...trader,
+                            services,
+                        },
+                        bookingMade: req.query.bookingMade,
+                        isloggedin,
+                        bookingsByDate,
+                        bookingsByService,
+                    });
+                },
+            ),
         )
         .catch((err) => {
             console.log(`Error making API request: ${err}`);

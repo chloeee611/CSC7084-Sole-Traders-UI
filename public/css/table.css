@@ -17,6 +17,23 @@ table {
     border-bottom-right-radius: 10px;
 }
 
+.tbl-empty {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tbl-empty a {
+    text-decoration: none;
+    color: black;
+}
+
+.tbl-error {
+    border: 1px solid red;
+}
+
 th {
     text-align: left;
     font-weight: 500;
@@ -43,6 +60,9 @@ td {
 
     @media (max-width: 768px) {
         flex-direction: column;
+        align-items: flex-start;
+
+        margin-bottom: 10px;
     }
 }
 
@@ -82,9 +102,32 @@ td {
     height: 100%;
     row-gap: 8px;
     display: flex;
-    flex-direction: row;
     align-items: end;
     justify-content: right;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.filters-mobile {
+    height: 100%;
+    width: 100%;
+    row-gap: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.filters-mobile > div {
+    width: 100%;
+    row-gap: 8px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .filters input,

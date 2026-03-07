@@ -82,6 +82,7 @@
                             </div>
                         
                             <div class="tbl-content">
+                                <% if (bookings.length > 0) { %>
                                 <table>
                                     <tbody>
                                         <% bookings.forEach(booking => { %>
@@ -106,6 +107,9 @@
                                         <% }) %>
                                     </tbody>
                                 </table>
+                                <% } else { %>
+                                    <div class="tbl-empty">You have no bookings</div>
+                                <% } %>
                             </div>
                         </div>
                     </div>

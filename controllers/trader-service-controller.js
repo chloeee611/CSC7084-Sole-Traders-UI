@@ -57,7 +57,10 @@ exports.getEditServicePage = (req, res) => {
 };
 
 exports.postNewService = (req, res) => {
-    const payload = { ...req.body, basePrice: Number(req.body.basePrice) };
+    const payload = {
+        ...req.body,
+        basePrice: req.body.basePrice ? Number(req.body.basePrice) : undefined,
+    };
     const { traderId, isloggedin } = req.session;
 
     if (!isloggedin) {
@@ -79,9 +82,13 @@ exports.postNewService = (req, res) => {
 };
 
 exports.postEditService = (req, res) => {
-    const payload = { ...req.body, basePrice: Number(req.body.basePrice) };
+    const payload = {
+        ...req.body,
+        basePrice: req.body.basePrice ? Number(req.body.basePrice) : undefined,
+    };
     const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
+    console.log(payload);
 
     if (!isloggedin) {
         res.redirect("/trader-login");

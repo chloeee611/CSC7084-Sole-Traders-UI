@@ -14,15 +14,11 @@ exports.postLogin = (req, res) => {
                 req.session.isloggedin = true;
                 req.session.traderId = apiRes.data.traderId;
                 res.redirect("/trader-profile");
-            } else {
-                return res.render("client/login", {
-                    error: apiRes.message,
-                });
             }
         })
         .catch((err) => {
             return res.render("client/login", {
-                error: err.response.data.message,
+                errorResults: err.response.data.validationResults,
             });
         });
 };

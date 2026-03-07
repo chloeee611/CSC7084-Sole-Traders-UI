@@ -58,6 +58,73 @@
                                     <% }) %>
                                 </select>
                             </div>
+                            <button type="submit">Filter</button>
+                        </form>
+
+                        <form class="filters-mobile" action="/trader-directory" method="GET">
+                            <div>
+                                <div>
+                                    <label>Region</label>
+                                    <input 
+                                        name="region" 
+                                        type="text" 
+                                        value="<%= filterParams.region %>"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label>Trade Type</label>
+                                    <select type="text" name="trade_type">
+                                        <option></option>
+                                        <% tradeTypes.forEach(({trade_type_id, trade_type_name}) => { %>
+                                            <option 
+                                                value="<%= trade_type_id %>" 
+                                                <% if (trade_type_id == filterParams.trade_type) { %>
+                                                selected
+                                                <% } %>
+                                            >
+                                                <%=trade_type_name%>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <label>Order By</label>
+                                    <select type="text" name="order_by">
+                                        <option></option>
+                                        <% tableHeaders.forEach(({value, label}) => { %>
+                                            <option 
+                                                value="<%= value %>" 
+                                                <% if (value == filterParams.order_by) { %>
+                                                selected
+                                                <% } %>
+                                            >
+                                                <%=label%>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label>Direction</label>
+                                    <select type="text" name="order_direction" value="<%= filterParams.order_direction %>">
+                                        <option></option>
+                                        <% [{label: 'Ascending', value: 'asc'}, {label: 'Descending', value: 'dsc'}].forEach(({value, label}) => { %>
+                                            <option 
+                                                value="<%= value %>" 
+                                                <% if (value == filterParams.order_direction) { %>
+                                                selected
+                                                <% } %>
+                                            >
+                                                <%=label%>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
 
                             <button type="submit">Filter</button>
                         </form>

@@ -46,33 +46,39 @@
                             </div>
 
                             <div class="tbl-content">
-                                <table>
-                                    <tbody>
-                                        <% services.forEach(service => { %>
-                                            <tr>
-                                                <td><%= service.title %></td>
-                                                <td><%= service.description %></td>
-                                                <td><%= service.pricing_type %></td>
-                                                <td>£<%= service.base_price.toFixed(2) %></td>
-                                                <td>
-                                                    <div class="services-action-buttons">
-                                                        <div class="secondary-button">
-                                                            <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
-                                                        </div>
+                                <% if (services.length > 0) { %>
+                                    <table>
+                                        <tbody>
+                                            <% services.forEach(service => { %>
+                                                <tr>
+                                                    <td><%= service.title %></td>
+                                                    <td><%= service.description %></td>
+                                                    <td><%= service.pricing_type %></td>
+                                                    <td>£<%= service.base_price.toFixed(2) %></td>
+                                                    <td>
+                                                        <div class="services-action-buttons">
+                                                            <div class="secondary-button">
+                                                                <a href="/trader-services/edit/<%= service.service_id %>">Edit</a>
+                                                            </div>
 
-                                                        <form method="post" action="/trader-services/delete/<%= service.service_id %>">
-                                                            <button type="submit" class="danger-button" onclick="return confirm('Delete this service?')">Delete</button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <% }) %>
-                                    </tbody>
-                                </table>
+                                                            <form method="post" action="/trader-services/delete/<%= service.service_id %>">
+                                                                <button type="submit" class="danger-button" onclick="return confirm('Delete this service?')">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                <% } else { %>
+                                    <div class="tbl-empty">
+                                        <a href="/trader-services/new-service">
+                                            <p>Click to add new service +</p>
+                                        </a></div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
