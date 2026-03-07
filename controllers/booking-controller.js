@@ -131,8 +131,7 @@ exports.patchBookingStatus = (req, res) => {
 
     axios
         .patch(`/bookings/${bookingId}/status`, { status, traderId })
-        .then((apiRes) => {
-            console.log(apiRes.data);
+        .then(() => {
             res.redirect("/trader-bookings");
         })
         .catch((error) => {

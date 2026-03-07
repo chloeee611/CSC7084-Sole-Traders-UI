@@ -62,8 +62,7 @@ exports.postDetails = (req, res) => {
 
     axios
         .put(`traders/${traderId}`, payload)
-        .then((apiRes) => {
-            console.log(apiRes.data);
+        .then(() => {
             res.redirect("/trader-profile");
         })
         .catch((err) => {

@@ -88,7 +88,6 @@ exports.postEditService = (req, res) => {
     };
     const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
-    console.log(payload);
 
     if (!isloggedin) {
         res.redirect("/trader-login");
@@ -96,8 +95,7 @@ exports.postEditService = (req, res) => {
 
     axios
         .put(`/traders/${traderId}/services/${serviceId}`, payload)
-        .then((apiRes) => {
-            console.log(apiRes.data);
+        .then(() => {
             res.redirect("/trader-services");
         })
         .catch((err) => {
@@ -129,8 +127,7 @@ exports.postDeleteService = (req, res) => {
 
     axios
         .delete(`/traders/${traderId}/services/${serviceId}`)
-        .then((apiRes) => {
-            console.log(apiRes.data);
+        .then(() => {
             res.redirect("/trader-services");
         })
         .catch((error) => {

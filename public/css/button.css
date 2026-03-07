@@ -42,7 +42,6 @@
     cursor: auto;
 }
 
-/* TODO: repeat this splitting of div and a styling with other buttons */
 .secondary-button {
     box-sizing: border-box;
     width: fit-content;

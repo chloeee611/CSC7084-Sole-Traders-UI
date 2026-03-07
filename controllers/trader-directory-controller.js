@@ -4,8 +4,6 @@ exports.getTraderDirectoryPage = (req, res) => {
     const { isloggedin } = req.session;
     const { region, trade_type, order_by, order_direction } = req.query;
 
-    console.log(req.query);
-
     const tableHeaders = [
         { value: "name", label: "Trader Name" },
         { value: "trade_type_name", label: "Trader Type" },
