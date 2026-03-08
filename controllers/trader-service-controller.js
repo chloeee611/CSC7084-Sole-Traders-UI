@@ -21,6 +21,10 @@ exports.getAllServicesPage = (req, res) => {
             });
         })
         .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
             console.log(`Error making API request: ${err}`);
         });
 };
@@ -59,6 +63,10 @@ exports.getEditServicePage = (req, res) => {
             });
         })
         .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
             console.log(`Error making API request: ${err}`);
         });
 };
@@ -83,6 +91,10 @@ exports.postNewService = (req, res) => {
             res.redirect("/trader-services");
         })
         .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
             res.render("trader/services/new-service", {
                 errorResults: err.response.data.validationResults,
                 isloggedin,
@@ -127,6 +139,10 @@ exports.postEditService = (req, res) => {
                     });
                 })
                 .catch((err) => {
+                    if (err.status === 403) {
+                        res.redirect("/trader-login");
+                    }
+
                     console.log(`Error making API request: ${err}`);
                 });
         });
@@ -148,7 +164,11 @@ exports.postDeleteService = (req, res) => {
         .then(() => {
             res.redirect("/trader-services");
         })
-        .catch((error) => {
-            console.log(`Error making API request: ${error}`);
+        .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
+            console.log(`Error making API request: ${err}`);
         });
 };

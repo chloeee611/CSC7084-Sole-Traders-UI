@@ -17,6 +17,10 @@ exports.getTraderProfilePage = (req, res) => {
             res.render("trader/profile/view-profile", { isloggedin, trader });
         })
         .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
             console.log(`Error making API request: ${err}`);
         });
 };
@@ -56,6 +60,10 @@ exports.getEditDetailsPage = (req, res) => {
             }),
         )
         .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
             console.log(`Error making API request: ${err}`);
         });
 };
@@ -104,6 +112,10 @@ exports.postDetails = (req, res) => {
                     }),
                 )
                 .catch((err) => {
+                    if (err.status === 403) {
+                        res.redirect("/trader-login");
+                    }
+
                     console.log(`Error making API request: ${err}`);
                 });
         });

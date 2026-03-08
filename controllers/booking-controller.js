@@ -17,8 +17,12 @@ exports.postNewBooking = (req, res) => {
         .catch((err) => {
             const traderRequest = axios.get(`/traders/${traderId}`);
             const servicesRequest = axios.get(`/traders/${traderId}/services`);
-            const dateChartRequest = axios.get(`/bookings/data/date`);
-            const serviceChartRequest = axios.get(`/bookings/data/service`);
+            const dateChartRequest = axios.get(
+                `/bookings/data/date?trader_id=${traderId}`,
+            );
+            const serviceChartRequest = axios.get(
+                `/bookings/data/service?trader_id=${traderId}`,
+            );
 
             axios
                 .all([
@@ -113,6 +117,10 @@ exports.getAllBookingsPage = (req, res) => {
             });
         })
         .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
             console.log(`Error making API request: ${err}`);
         });
 };
@@ -143,8 +151,12 @@ exports.patchBookingStatus = (req, res) => {
         .then(() => {
             res.redirect("/trader-bookings");
         })
-        .catch((error) => {
-            console.log(`Error updating bookingt: ${error}`);
+        .catch((err) => {
+            if (err.status === 403) {
+                res.redirect("/trader-login");
+            }
+
+            console.log(`Error updating bookingt: ${err}`);
         });
 };
 
