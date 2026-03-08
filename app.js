@@ -4,6 +4,7 @@ const session = require("express-session");
 const Axios = require("axios");
 require("dotenv").config({ path: "./config.env" });
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 const baseRouter = require("./routes/base-routes");
 const traderDirectoryRouter = require("./routes/trader-directory-routes");
@@ -28,6 +29,7 @@ app.use(
 
 app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use("/", baseRouter);
 app.use("/trader-directory", traderDirectoryRouter);

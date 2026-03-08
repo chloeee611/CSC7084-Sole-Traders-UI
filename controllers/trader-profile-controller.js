@@ -2,13 +2,16 @@ const axios = require("axios");
 
 exports.getTraderProfilePage = (req, res) => {
     const { isloggedin, traderId } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
     axios
-        .get(`/traders/${traderId}`)
+        .get(`/traders/${traderId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         .then((apiRes) => {
             const trader = apiRes.data.result;
             res.render("trader/profile/view-profile", { isloggedin, trader });
@@ -20,13 +23,18 @@ exports.getTraderProfilePage = (req, res) => {
 
 exports.getEditDetailsPage = (req, res) => {
     const { isloggedin, traderId } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
-    const traderRequest = axios.get(`/traders/${traderId}`);
-    const tradeTypesRequest = axios.get("/trade-types");
+    const traderRequest = axios.get(`/traders/${traderId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    const tradeTypesRequest = axios.get("/trade-types", {
+        headers: { Authorization: `Bearer ${token}` },
+    });
 
     axios
         .all([traderRequest, tradeTypesRequest])
@@ -55,19 +63,26 @@ exports.getEditDetailsPage = (req, res) => {
 exports.postDetails = (req, res) => {
     const payload = req.body;
     const { traderId, isloggedin } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
     axios
-        .put(`traders/${traderId}`, payload)
+        .put(`traders/${traderId}`, payload, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         .then(() => {
             res.redirect("/trader-profile");
         })
         .catch((err) => {
-            const traderRequest = axios.get(`/traders/${traderId}`);
-            const tradeTypesRequest = axios.get("/trade-types");
+            const traderRequest = axios.get(`/traders/${traderId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const tradeTypesRequest = axios.get("/trade-types", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
 
             axios
                 .all([traderRequest, tradeTypesRequest])

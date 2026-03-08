@@ -17,12 +17,8 @@ exports.postNewBooking = (req, res) => {
         .catch((err) => {
             const traderRequest = axios.get(`/traders/${traderId}`);
             const servicesRequest = axios.get(`/traders/${traderId}/services`);
-            const dateChartRequest = axios.get(
-                `/bookings/data/date?trader_id=${traderId}`,
-            );
-            const serviceChartRequest = axios.get(
-                `/bookings/data/service?trader_id=${traderId}`,
-            );
+            const dateChartRequest = axios.get(`/bookings/data/date`);
+            const serviceChartRequest = axios.get(`/bookings/data/service`);
 
             axios
                 .all([
@@ -72,8 +68,9 @@ exports.postNewBooking = (req, res) => {
 exports.getAllBookingsPage = (req, res) => {
     const { isloggedin, traderId } = req.session;
     const { order_by, order_direction, status } = req.query;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
@@ -93,7 +90,12 @@ exports.getAllBookingsPage = (req, res) => {
 
     axios
         .get(`/bookings`, {
-            params: { status, order_by, order_direction, trader_id: traderId },
+            params: {
+                status,
+                order_by,
+                order_direction,
+            },
+            headers: { Authorization: `Bearer ${token}` },
         })
         .then((apiRes) => {
             const bookings = apiRes.data.result;
@@ -119,8 +121,9 @@ exports.patchBookingStatus = (req, res) => {
     const { bookingId } = req.params;
     const { traderId, isloggedin } = req.session;
     const { status } = req.body;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
@@ -130,7 +133,13 @@ exports.patchBookingStatus = (req, res) => {
     }
 
     axios
-        .patch(`/bookings/${bookingId}/status`, { status, traderId })
+        .patch(
+            `/bookings/${bookingId}/status`,
+            { status, traderId },
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            },
+        )
         .then(() => {
             res.redirect("/trader-bookings");
         })

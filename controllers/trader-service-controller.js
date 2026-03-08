@@ -2,13 +2,16 @@ const axios = require("axios");
 
 exports.getAllServicesPage = (req, res) => {
     const { isloggedin, traderId } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         return res.redirect("/trader-login");
     }
 
     axios
-        .get(`/traders/${traderId}/services`)
+        .get(`/traders/${traderId}/services`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         .then((apiRes) => {
             const services = apiRes.data.result;
             res.render("trader/services/view-services", {
@@ -24,8 +27,9 @@ exports.getAllServicesPage = (req, res) => {
 
 exports.getNewServicePage = (req, res) => {
     const { isloggedin } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
@@ -35,13 +39,16 @@ exports.getNewServicePage = (req, res) => {
 exports.getEditServicePage = (req, res) => {
     const { serviceId } = req.params;
     const { isloggedin, traderId } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
     axios
-        .get(`/traders/${traderId}/services/${serviceId}`)
+        .get(`/traders/${traderId}/services/${serviceId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         .then((apiRes) => {
             const service = apiRes.data.result;
 
@@ -62,13 +69,16 @@ exports.postNewService = (req, res) => {
         basePrice: req.body.basePrice ? Number(req.body.basePrice) : undefined,
     };
     const { traderId, isloggedin } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         return res.redirect("/trader-login");
     }
 
     axios
-        .post(`/traders/${traderId}/services`, payload)
+        .post(`/traders/${traderId}/services`, payload, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         .then(() => {
             res.redirect("/trader-services");
         })
@@ -88,19 +98,24 @@ exports.postEditService = (req, res) => {
     };
     const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
     axios
-        .put(`/traders/${traderId}/services/${serviceId}`, payload)
+        .put(`/traders/${traderId}/services/${serviceId}`, payload, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         .then(() => {
             res.redirect("/trader-services");
         })
         .catch((err) => {
             axios
-                .get(`/traders/${traderId}/services/${serviceId}`)
+                .get(`/traders/${traderId}/services/${serviceId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
                 .then((apiRes) => {
                     const service = apiRes.data.result;
 
@@ -120,13 +135,16 @@ exports.postEditService = (req, res) => {
 exports.postDeleteService = (req, res) => {
     const { serviceId } = req.params;
     const { traderId, isloggedin } = req.session;
+    const token = req.cookies.access_token;
 
-    if (!isloggedin) {
+    if (!isloggedin || !token) {
         res.redirect("/trader-login");
     }
 
     axios
-        .delete(`/traders/${traderId}/services/${serviceId}`)
+        .delete(`/traders/${traderId}/services/${serviceId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
         .then(() => {
             res.redirect("/trader-services");
         })

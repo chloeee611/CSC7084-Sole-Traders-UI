@@ -13,6 +13,10 @@ exports.postLogin = (req, res) => {
             if (apiRes.status === 200) {
                 req.session.isloggedin = true;
                 req.session.traderId = apiRes.data.traderId;
+                res.cookie("access_token", apiRes.data.token, {
+                    httpOnly: true,
+                    secure: true,
+                });
                 res.redirect("/trader-profile");
             }
         })
